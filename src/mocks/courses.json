@@ -1,0 +1,92 @@
+[
+  {
+    "id": "forest-basics",
+    "title": "Лес Основ",
+    "description": "Стартовая локация. Изучение базовых понятий программирования.",
+    "locked": false,
+    "completed": false,
+    "missions": [
+      {
+        "id": "algorithms",
+        "title": "Тропинка алгоритмов",
+        "xp": 50,
+        "completed": false,
+        "locked": false
+      },
+      {
+        "id": "variables",
+        "title": "Переменные",
+        "xp": 50,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "types",
+        "title": "Типы данных",
+        "xp": 50,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "conditions",
+        "title": "Условия",
+        "xp": 50,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "forest-final",
+        "title": "Сердце леса",
+        "xp": 100,
+        "completed": false,
+        "locked": true,
+        "isFinal": true
+      }
+    ]
+  },
+  {
+    "id": "js-desert",
+    "title": "Пустыня JavaScript",
+    "description": "Изучение функций, циклов и массивов.",
+    "locked": true,
+    "completed": false,
+    "missions": [
+      {
+        "id": "functions",
+        "title": "Функции",
+        "xp": 60,
+        "completed": false,
+        "locked": false
+      },
+      {
+        "id": "options",
+        "title": "Параметры",
+        "xp": 60,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "cycles",
+        "title": "Циклы",
+        "xp": 60,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "arrays",
+        "title": "Массивы",
+        "xp": 60,
+        "completed": false,
+        "locked": true
+      },
+      {
+        "id": "desert-final",
+        "title": "Храм JavaScript",
+        "xp": 120,
+        "completed": false,
+        "locked": true,
+        "isFinal": true
+      }
+    ]
+  }
+]

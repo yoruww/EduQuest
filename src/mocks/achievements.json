@@ -1,0 +1,26 @@
+[
+  {
+    "id": "first-mission",
+    "title": "Первый шаг",
+    "description": "Завершить первую миссию",
+    "condition": "complete-1-mission"
+  },
+  {
+    "id": "course-conqueror",
+    "title": "Покоритель курса",
+    "description": "Завершите полный курс",
+    "condition": "complete-full-cource"
+  },
+  {
+    "id": "100xp",
+    "title": "100 XP",
+    "description": "Наберите 100 XP",
+    "condition": "earn-100-XP"
+  },
+  {
+    "id": "all-courses",
+    "title": "Мастер знаний",
+    "description": "Завершить все курсы",
+    "condition": "complete-all"
+  }
+]
