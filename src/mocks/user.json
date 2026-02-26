@@ -1,7 +1,6 @@
 {
   "id": "user-1",
   "name": "Пользователь",
-  "level": 1,
   "stars": 0,
   "xp": 0,
   "completedMissions": [],

@@ -9,7 +9,7 @@
     "id": "course-conqueror",
     "title": "Покоритель курса",
     "description": "Завершите полный курс",
-    "condition": "complete-full-cource"
+    "condition": "complete-full-course"
   },
   {
     "id": "100xp",
