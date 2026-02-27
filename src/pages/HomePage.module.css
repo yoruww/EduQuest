@@ -1,0 +1,379 @@
+.page {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+.loading {
+  padding: 40px 60px;
+  color: #333;
+}
+
+.mapCard {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+  padding: 22px 22px 18px;
+}
+
+.mapHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mapEmoji {
+  font-size: 20px;
+}
+
+.mapTitle {
+  font-size: 28px;
+  font-weight: 750;
+  color: #111;
+}
+
+.mapArea {
+  position: relative;
+  height: 560px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(195, 205, 255, 0.58),
+    rgba(236, 219, 205, 0.58)
+  );
+
+  border: 2px solid rgba(106, 124, 255, 0.30);
+  overflow: hidden;
+}
+
+@media (min-width: 1400px) {
+  .mapArea {
+    height: 620px;
+  }
+}
+
+.cloud1,
+.cloud2 {
+  position: absolute;
+  width: 160px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.30);
+  border-radius: 999px;
+  opacity: 0.55;
+}
+
+.cloud1 {
+  top: 90px;
+  left: 90px;
+}
+
+.cloud2 {
+  top: 120px;
+  right: 150px;
+  width: 190px;
+}
+
+.path {
+  display: none !important;
+}
+
+.nodes {
+  position: absolute;
+  inset: 0;
+}
+
+.node {
+  position: absolute;
+  width: 190px;
+  background: transparent;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+
+  transform: translate(-50%, -50%);
+}
+
+.node:hover {
+  transform: translate(-50%, -52%);
+}
+
+.node:disabled {
+  cursor: default;
+}
+
+.nodeTitle {
+  font-weight: 750;
+  color: #111;
+  font-size: 14px;
+  text-align: center;
+}
+
+.nodeSub {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.circle {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+}
+
+.circleInner {
+  width: 82px;
+  height: 82px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.10);
+  display: grid;
+  place-items: center;
+}
+
+.nodeIcon {
+  font-size: 28px;
+}
+
+.lock {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.10);
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+}
+
+.nodeActive {
+  opacity: 1;
+}
+
+.nodeLocked {
+  opacity: 0.45;
+}
+
+.nodeForest .circle {
+  border: 4px solid rgba(58, 174, 86, 0.92);
+}
+
+.nodeActive:not(.nodeForest) .circle {
+  border: 4px solid rgba(0, 0, 0, 0.06);
+}
+
+.node:nth-child(1) {
+  left: 22%;
+  top: 55%;
+}
+
+.node:nth-child(2) {
+  left: 45%;
+  top: 48%;
+}
+
+.node:nth-child(3) {
+  left: 62%;
+  top: 36%;
+}
+
+.node:nth-child(4) {
+  left: 78%;
+  top: 54%;
+}
+
+.node:nth-child(5) {
+  left: 52%;
+  top: 72%;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sideCard {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+}
+
+.profileTop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.bigAvatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6a7cff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+}
+
+.profileName {
+  font-weight: 750;
+  color: #111;
+}
+
+.profileLevel {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sparkle {
+  font-size: 16px;
+}
+
+.cardTitle {
+  font-weight: 750;
+  color: #111;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.muted {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.progressValue {
+  font-size: 13px;
+  font-weight: 650;
+  color: #111;
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6a7cff, #8b5cf6);
+}
+
+.bigPercent {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 850;
+  color: #5b6cff;
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.achItem {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.achItem:hover {
+  transform: translateY(-2px);
+}
+
+.achIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.emojiIcon {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+  transition: all 0.2s ease;
+}
+
+.achText {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.achLocked .achIcon {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.achLocked .emojiIcon {
+  filter: grayscale(100%) opacity(0.45);
+}
+
+.achLocked .achText {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.achUnlocked .achIcon {
+  background: linear-gradient(
+    135deg,
+    rgba(106, 124, 255, 0.18),
+    rgba(139, 92, 246, 0.14)
+  );
+  box-shadow: 0 10px 18px rgba(91, 108, 255, 0.18);
+}
+
+.achUnlocked .emojiIcon {
+  filter: none;
+  transform: scale(1.08);
+}
+
+.achUnlocked .achText {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+@media (max-width: 1100px) {
+  .page {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+  }
+
+  .mapArea {
+    height: 480px;
+  }
+}
