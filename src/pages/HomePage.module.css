@@ -1,3 +1,9 @@
+:root {
+  --text: #111;
+  --muted: rgba(0, 0, 0, 0.55);
+  --brand: #5b6cff;
+}
+
 .page {
   width: 100%;
   display: grid;
@@ -26,13 +32,15 @@
 }
 
 .mapEmoji {
-  font-size: 20px;
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .mapTitle {
-  font-size: 28px;
-  font-weight: 750;
-  color: #111;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
 }
 
 .mapArea {
@@ -106,17 +114,24 @@
   cursor: default;
 }
 
+.node:focus-visible {
+  outline: none;
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+}
+
 .nodeTitle {
-  font-weight: 750;
-  color: #111;
-  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.87rem; 
   text-align: center;
+  line-height: 1.2;
 }
 
 .nodeSub {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.75rem; 
+  color: var(--muted);
   text-align: center;
+  line-height: 1.2;
 }
 
 .circle {
@@ -139,7 +154,8 @@
 }
 
 .nodeIcon {
-  font-size: 28px;
+  font-size: 1.75rem; 
+  line-height: 1;
 }
 
 .lock {
@@ -152,7 +168,8 @@
   background: rgba(0, 0, 0, 0.10);
   display: grid;
   place-items: center;
-  font-size: 13px;
+  font-size: 0.8rem; 
+  line-height: 1;
 }
 
 .nodeActive {
@@ -225,18 +242,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 1.75rem; 
+  line-height: 1;
   color: #fff;
 }
 
 .profileName {
-  font-weight: 750;
-  color: #111;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1rem; 
+  line-height: 1.2;
 }
 
 .profileLevel {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.8rem; 
+  color: var(--muted);
+  line-height: 1.2;
 }
 
 .cardTitleRow {
@@ -247,12 +268,15 @@
 }
 
 .sparkle {
-  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .cardTitle {
-  font-weight: 750;
-  color: #111;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1rem; 
+  line-height: 1.2;
 }
 
 .progressRow {
@@ -263,14 +287,16 @@
 }
 
 .muted {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.2;
 }
 
 .progressValue {
-  font-size: 13px;
-  font-weight: 650;
-  color: #111;
+  font-size: 0.8rem; 
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
 }
 
 .progressBar {
@@ -290,9 +316,10 @@
 .bigPercent {
   margin-top: 10px;
   text-align: center;
-  font-size: 26px;
-  font-weight: 850;
-  color: #5b6cff;
+  font-size: 1.62rem; 
+  font-weight: 800;
+  color: var(--brand);
+  line-height: 1.1;
 }
 
 .achievementsGrid {
@@ -316,6 +343,11 @@
   transform: translateY(-2px);
 }
 
+.achItem:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(91, 108, 255, 0.25);
+}
+
 .achIcon {
   width: 56px;
   height: 56px;
@@ -323,18 +355,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 1.62rem;
 }
 
 .emojiIcon {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .achText {
   text-align: center;
-  font-size: 12px;
+  font-size: 0.75rem; 
   font-weight: 600;
+  line-height: 1.2;
 }
 
 .achLocked .achIcon {
@@ -346,7 +379,7 @@
 }
 
 .achLocked .achText {
-  color: rgba(0, 0, 0, 0.55);
+  color: var(--muted);
 }
 
 .achUnlocked .achIcon {
@@ -370,7 +403,6 @@
 @media (max-width: 1100px) {
   .page {
     grid-template-columns: 1fr;
-    max-width: 900px;
   }
 
   .mapArea {
