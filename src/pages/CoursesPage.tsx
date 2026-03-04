@@ -24,10 +24,12 @@ const CoursesPage = () => {
     const forest = data.courses.find((c: any) => c.id === "forest-basics");
     const desert = data.courses.find((c: any) => c.id === "js-desert");
 
-    const forestCompleted = forest?.missions?.filter((m: any) => m.completed).length ?? 0;
+    const forestCompleted =
+      forest?.missions?.filter((m: any) => m.completed).length ?? 0;
     const forestCount = forest?.missions?.length ?? 5;
 
-    const desertCompleted = desert?.missions?.filter((m: any) => m.completed).length ?? 0;
+    const desertCompleted =
+      desert?.missions?.filter((m: any) => m.completed).length ?? 0;
     const desertCount = desert?.missions?.length ?? 5;
 
     return [
@@ -45,19 +47,20 @@ const CoursesPage = () => {
       {
         id: "js-desert",
         title: desert?.title ?? "Пустыня JavaScript",
-        description: desert?.description ?? "Изучение функций, циклов и массивов.",
+        description:
+          desert?.description ?? "Изучение функций, циклов и массивов.",
         missionsCount: desertCount,
         completedMissions: desertCompleted,
         locked: desert?.locked ?? true,
         icon: "🏜️",
       },
 
-      // Заглушки (как в Figma — просто закрыты)
+      // Заглушки
       {
         id: "react-castle",
         title: "Замок React",
         description: "Изучение компонентов и состояния React.",
-        missionsCount: 0,
+        missionsCount: 5,
         completedMissions: 0,
         locked: true,
         icon: "🏰",
@@ -67,7 +70,7 @@ const CoursesPage = () => {
         id: "algo-mountains",
         title: "Горы Алгоритмов",
         description: "Сложные алгоритмы и структуры данных.",
-        missionsCount: 0,
+        missionsCount: 5,
         completedMissions: 0,
         locked: true,
         icon: "⛰️",
@@ -77,7 +80,7 @@ const CoursesPage = () => {
         id: "api-ocean",
         title: "Океан API",
         description: "Работа с API и асинхронным кодом.",
-        missionsCount: 0,
+        missionsCount: 5,
         completedMissions: 0,
         locked: true,
         icon: "🌊",
@@ -104,12 +107,7 @@ const CoursesPage = () => {
 
       <section className={styles.grid}>
         {cards.map((card) => {
-          const progressText =
-            !card.locked && !card.soon
-              ? `${card.completedMissions} из ${card.missionsCount} миссий`
-              : card.soon
-              ? "Скоро открытие"
-              : `${card.missionsCount || 5} миссий`;
+          const isOpen = !card.locked && !card.soon;
 
           const progressPercent =
             card.missionsCount > 0
@@ -150,32 +148,47 @@ const CoursesPage = () => {
                 <h3 className={styles.cardTitle}>{card.title}</h3>
                 <p className={styles.desc}>{card.description}</p>
 
-                <div className={styles.meta}>
-                  <span className={styles.metaText}>{progressText}</span>
-                </div>
-
-                {!card.locked && !card.soon && (
-                  <div className={styles.progressWrap}>
-                    <div className={styles.progressBar}>
-                      <div
-                        className={styles.progressFill}
-                        style={{ width: `${progressPercent}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                <div className={styles.bottomRow}>
-                  <span className={styles.missions}>
-                    {card.missionsCount ? `${card.missionsCount} миссий` : ""}
-                  </span>
-
-                  {!card.locked && !card.soon && (
-                    <span className={styles.arrow} aria-hidden="true">
-                      ›
+                {}
+                {isOpen ? (
+                  <>
+                    <span className={styles.metaText}>
+                      {card.completedMissions} из {card.missionsCount} миссий
                     </span>
-                  )}
-                </div>
+
+                    <div className={styles.progressWrap}>
+                      <div className={styles.progressBar}>
+                        <div
+                          className={styles.progressFill}
+                          style={{ width: `${progressPercent}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className={styles.bottomRow}>
+                      <span className={styles.missions}>
+                        {card.missionsCount} миссий
+                      </span>
+
+                      <span className={styles.arrow} aria-hidden="true">
+                        ›
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {}
+                    {!card.soon && (
+                      <span className={styles.metaText}>
+                        {card.missionsCount} миссий
+                      </span>
+                    )}
+
+                    {}
+                    {card.soon && (
+                      <span className={styles.metaText}>Скоро открытие</span>
+                    )}
+                  </>
+                )}
               </div>
             </button>
           );
