@@ -24,7 +24,7 @@ const AchievementIcon = ({ id }: { id: string }) => {
       return <span className={styles.emojiIcon}>🎯</span>;
 
     case "all-courses":
-      return <span className={styles.emojiIcon}>📚</span>; 
+      return <span className={styles.emojiIcon}>📚</span>;
 
     default:
       return <span className={styles.emojiIcon}>⭐</span>;
@@ -36,33 +36,40 @@ const HomePage = () => {
   const { data } = useEduQuest();
 
   const totalMissions =
-    data?.courses.reduce((sum, c) => sum + c.missions.length, 0) ?? 0;
+    data?.courses.reduce((sum: number, c: any) => sum + c.missions.length, 0) ??
+    0;
 
   const completedMissions =
     data?.courses.reduce(
-      (sum, c) => sum + c.missions.filter((m) => m.completed).length,
+      (sum: number, c: any) =>
+        sum + c.missions.filter((m: any) => m.completed).length,
       0
     ) ?? 0;
 
   const worldProgressPercent =
-    totalMissions > 0 ? Math.round((completedMissions / totalMissions) * 100) : 0;
+    totalMissions > 0
+      ? Math.round((completedMissions / totalMissions) * 100)
+      : 0;
 
   const level = useMemo(() => {
     const xp = data?.user.xp ?? 0;
     return Math.floor(xp / 100) + 1;
   }, [data?.user.xp]);
 
-  const xpToNextLevel = 300; 
+  const xpToNextLevel = 300;
   const xpProgress = data?.user.xp ?? 0;
-  const xpPercent = Math.min(100, Math.round((xpProgress / xpToNextLevel) * 100));
+  const xpPercent = Math.min(
+    100,
+    Math.round((xpProgress / xpToNextLevel) * 100)
+  );
 
-  const forestCourse = data?.courses.find((c) => c.id === "forest-basics");
-  const desertCourse = data?.courses.find((c) => c.id === "js-desert");
+  const forestCourse = data?.courses.find((c: any) => c.id === "forest-basics");
+  const desertCourse = data?.courses.find((c: any) => c.id === "js-desert");
 
   const nodes: MapNode[] = useMemo(() => {
     const list: MapNode[] = [];
 
-    // Лес Основ 
+    // Лес Основ
     list.push({
       id: "forest-basics",
       title: "Лес Основ",
@@ -118,11 +125,12 @@ const HomePage = () => {
 
   const lastAchievements = useMemo(() => {
     if (!data) return [];
-    const unlocked = new Set(data.user.achievements);
-    return data.achievements.slice(0, 4).map((a) => ({
-      id: a.id,
-      title: a.title,
-      unlocked: unlocked.has(a.id),
+    const unlocked = new Set<string>(data.user.achievements);
+
+    return data.achievements.slice(0, 4).map((a: any) => ({
+      id: a.id as string,
+      title: a.title as string,
+      unlocked: unlocked.has(a.id as string),
     }));
   }, [data]);
 
@@ -130,7 +138,6 @@ const HomePage = () => {
 
   return (
     <div className={styles.page}>
-      {}
       <section className={styles.mapCard}>
         <div className={styles.mapHeader}>
           <span className={styles.mapEmoji}>🗺️</span>
@@ -139,7 +146,7 @@ const HomePage = () => {
 
         <div className={styles.mapArea}>
           <div className={styles.nodes}>
-            {nodes.map((n) => {
+            {nodes.map((n: MapNode) => {
               const locked = n.state === "locked";
               const isForest = n.id === "forest-basics";
 
@@ -179,9 +186,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {}
       <aside className={styles.sidebar}>
-        {/* карточка пользователя */}
         <div className={styles.sideCard}>
           <div className={styles.profileTop}>
             <div className={styles.bigAvatar}>👑</div>
@@ -197,11 +202,13 @@ const HomePage = () => {
           </div>
 
           <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${xpPercent}%` }} />
+            <div
+              className={styles.progressFill}
+              style={{ width: `${xpPercent}%` }}
+            />
           </div>
         </div>
 
-        {/* прогресс карты */}
         <div className={styles.sideCard}>
           <div className={styles.cardTitleRow}>
             <span className={styles.sparkle}>✨</span>
@@ -225,14 +232,13 @@ const HomePage = () => {
           <div className={styles.bigPercent}>{worldProgressPercent}%</div>
         </div>
 
-        {/* достижения */}
         <div className={styles.sideCard}>
           <div className={styles.cardTitleRow}>
             <span className={styles.cardTitle}>Последние достижения</span>
           </div>
 
           <div className={styles.achievementsGrid}>
-            {lastAchievements.map((a) => (
+            {lastAchievements.map((a: any) => (
               <div
                 key={a.id}
                 className={`${styles.achItem} ${
