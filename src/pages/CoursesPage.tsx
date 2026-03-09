@@ -121,6 +121,7 @@ const CoursesPage = () => {
               className={[
                 styles.card,
                 card.locked || card.soon ? styles.cardLocked : styles.cardActive,
+                card.id === "js-desert" ? styles.cardDesert : "",
               ].join(" ")}
               onClick={() => openCourse(card)}
               disabled={card.locked || card.soon}

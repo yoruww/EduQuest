@@ -4,158 +4,230 @@ import { useEduQuest } from "../hooks/useEduQuest";
 import styles from "./CoursePage.module.css";
 
 type QuizOption = { id: string; text: string };
+
 type MissionContent = {
   id: string;
   title: string;
-  icon: string; 
+  icon: string;
   theory: string;
   question: string;
   options: QuizOption[];
   correctOptionId: string;
 };
 
-const COURSE_ID = "forest-basics";
-
-const FOREST_MISSIONS: MissionContent[] = [
-  {
-    id: "algorithms",
-    title: "Тропинка алгоритмов",
-    icon: "🌱",
-    theory:
-      "Алгоритм — это чёткая последовательность шагов, которая приводит к результату.\n\n" +
-      "У алгоритма обычно есть:\n" +
-      "• порядок действий (шаги идут один за другим)\n" +
-      "• понятные действия (каждый шаг можно выполнить)\n" +
-      "• итог (получаем конкретный результат)\n\n" +
-      "Одна фраза или просто описание «что сделать» — это ещё не алгоритм. Нужны именно шаги.",
-    question: "Какой вариант является алгоритмом?",
-    options: [
-      { id: "a", text: "Сделать чай" },
-      { id: "b", text: "Вскипятить воду → добавить чай → подождать" },
-      { id: "c", text: "Чай вкусный" },
-    ],
-    correctOptionId: "b",
-  },
-  {
-    id: "variables",
-    title: "Переменные",
-    icon: "🌿",
-    theory:
-      "Переменная — это «именованная коробка», в которую можно положить значение и потом использовать его в коде.\n\n" +
-      "В JavaScript переменные объявляют ключевыми словами:\n" +
-      "• let — значение можно менять\n" +
-      "• const — значение менять нельзя\n\n" +
-      "Важно: в объявлении есть имя переменной, знак = и значение. Слова вроде “variable” в JS не используют.",
-    question: "Как правильно объявить переменную?",
-    options: [
-      { id: "a", text: "variable age = 18" },
-      { id: "b", text: "let age = 18" },
-      { id: "c", text: "age = let 18" },
-    ],
-    correctOptionId: "b",
-  },
-  {
-    id: "types",
-    title: "Типы данных",
-    icon: "🌲",
-    theory:
-      "Тип данных показывает, что именно хранится в переменной.\n\n" +
-      "• Number — числа (25, 3.14)\n" +
-      "• String — строки (текст). Если значение в кавычках — это строка.\n" +
-      "• Boolean — true или false\n\n" +
-      "Обрати внимание: \"25\" и 25 — это разные типы. Кавычки превращают число в строку.",
-    question: "Какой тип у значения “25”?",
-    options: [
-      { id: "a", text: "Number" },
-      { id: "b", text: "String" },
-      { id: "c", text: "Boolean" },
-    ],
-    correctOptionId: "b",
-  },
-  {
-    id: "conditions",
-    title: "Условия",
-    icon: "🍃",
-    theory:
-      "Условие (if) позволяет выполнять код только тогда, когда проверка истинна.\n\n" +
-      "В JavaScript правильный синтаксис:\n" +
-      "• условие пишется в круглых скобках ( )\n" +
-      "• блок кода — в фигурных скобках { }\n\n" +
-      "Слова вроде “then” в JavaScript не используются.",
-    question: "Какая запись условия в JavaScript правильная?",
-    options: [
-      { id: "a", text: "if x > 5 then" },
-      { id: "b", text: "if (x > 5) { }" },
-      { id: "c", text: "if x > 5 { }" },
-    ],
-    correctOptionId: "b",
-  },
-  {
-    id: "forest-final",
-    title: "Сердце леса",
-    icon: "🌳",
-    theory:
-      "Ты уже знаешь базу: алгоритмы, переменные, типы и условия.\n\n" +
-      "Переменные — это способ хранить значения под именем, чтобы:\n" +
-      "• использовать одно и то же значение много раз\n" +
-      "• изменять значение в процессе работы программы (если это let)\n\n" +
-      "Главное: переменная хранит данные, а не «тип» или «команду».",
-    question: "Что верно про переменные?",
-    options: [
-      { id: "a", text: "Переменные нужны только для чисел" },
-      { id: "b", text: "Переменные хранят данные, которые можно использовать в коде" },
-      { id: "c", text: "Переменные нельзя менять" },
-    ],
-    correctOptionId: "b",
-  },
-];
-
 type AnswerState = "idle" | "selected" | "checked_correct" | "checked_wrong";
+
+const COURSE_CONTENT: Record<string, MissionContent[]> = {
+  "forest-basics": [
+    {
+      id: "algorithms",
+      title: "Тропинка алгоритмов",
+      icon: "🌱",
+      theory:
+        "Алгоритм — это последовательность шагов для решения задачи.\n\n" +
+        "У алгоритма есть порядок действий, понятные шаги и конкретный результат.\n" +
+        "Если описано только общее действие, а не шаги, это ещё не алгоритм.",
+      question: "Какой вариант является алгоритмом?",
+      options: [
+        { id: "a", text: "Сделать чай" },
+        { id: "b", text: "Вскипятить воду → добавить чай → подождать" },
+        { id: "c", text: "Чай вкусный" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "variables",
+      title: "Переменные",
+      icon: "🌿",
+      theory:
+        "Переменная — это контейнер для хранения данных.\n\n" +
+        "У переменной есть имя и значение. В JavaScript переменные обычно объявляют через let или const.\n" +
+        "Запись должна быть в правильном порядке: сначала ключевое слово, потом имя, потом значение.",
+      question: "Как правильно объявить переменную?",
+      options: [
+        { id: "a", text: "variable age = 18" },
+        { id: "b", text: "let age = 18" },
+        { id: "c", text: "age = let 18" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "types",
+      title: "Типы данных",
+      icon: "🌲",
+      theory:
+        "Тип данных показывает, какое значение хранится в переменной.\n\n" +
+        "Number — число, String — строка, Boolean — true/false.\n" +
+        "Если значение записано в кавычках, это строка, даже если внутри число.",
+      question: "Какой тип у значения “25”?",
+      options: [
+        { id: "a", text: "Number" },
+        { id: "b", text: "String" },
+        { id: "c", text: "Boolean" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "conditions",
+      title: "Условия",
+      icon: "🍃",
+      theory:
+        "Условия позволяют выполнять код по-разному в зависимости от ситуации.\n\n" +
+        "В JavaScript для этого используют if.\n" +
+        "Условие пишется в круглых скобках, а блок кода — в фигурных.",
+      question: "Какая запись условия в JavaScript правильная?",
+      options: [
+        { id: "a", text: "if x > 5 then" },
+        { id: "b", text: "if (x > 5) { }" },
+        { id: "c", text: "if x > 5 { }" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "forest-final",
+      title: "Сердце леса",
+      icon: "🌳",
+      theory:
+        "Финальная миссия объединяет базовые знания.\n\n" +
+        "Алгоритмы — это шаги, переменные — хранение данных, типы — вид значения, условия — выбор действия.\n" +
+        "Хорошее понимание этих основ помогает двигаться дальше.",
+      question: "Что верно про переменные?",
+      options: [
+        { id: "a", text: "Переменные нужны только для чисел" },
+        { id: "b", text: "Переменные хранят данные, которые можно использовать в коде" },
+        { id: "c", text: "Переменные нельзя менять" },
+      ],
+      correctOptionId: "b",
+    },
+  ],
+
+  "js-desert": [
+    {
+      id: "functions",
+      title: "Функции",
+      icon: "⚙️",
+      theory:
+        "Функция — это блок кода, который можно запускать много раз.\n\n" +
+        "Она помогает не повторять один и тот же код и делает программу удобнее.\n" +
+        "Функцию можно объявить и потом вызвать по имени.",
+      question: "Как правильно объявить функцию в JavaScript?",
+      options: [
+        { id: "a", text: "function hello() { }" },
+        { id: "b", text: "func hello() { }" },
+        { id: "c", text: "hello function() { }" },
+      ],
+      correctOptionId: "a",
+    },
+    {
+      id: "options",
+      title: "Параметры",
+      icon: "🌵",
+      theory:
+        "Параметры — это данные, которые функция получает при вызове.\n\n" +
+        "Они указываются в круглых скобках при объявлении функции.\n" +
+        "С их помощью функция может работать с разными значениями.",
+      question: "Где указываются параметры функции?",
+      options: [
+        { id: "a", text: "В фигурных скобках" },
+        { id: "b", text: "В круглых скобках после имени функции" },
+        { id: "c", text: "После return" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "cycles",
+      title: "Циклы",
+      icon: "☀️",
+      theory:
+        "Цикл позволяет повторять действие несколько раз.\n\n" +
+        "Например, можно вывести числа от 1 до 5 без повторения одинакового кода.\n" +
+        "В JavaScript часто используют цикл for.",
+      question: "Какой оператор используют для цикла?",
+      options: [
+        { id: "a", text: "for" },
+        { id: "b", text: "if" },
+        { id: "c", text: "const" },
+      ],
+      correctOptionId: "a",
+    },
+    {
+      id: "arrays",
+      title: "Массивы",
+      icon: "🐫",
+      theory:
+        "Массив — это список значений в одной переменной.\n\n" +
+        "Элементы массива записываются в квадратных скобках.\n" +
+        "Массив удобен, когда нужно хранить несколько значений вместе.",
+      question: "Какая запись создаёт массив?",
+      options: [
+        { id: "a", text: "let arr = {1, 2, 3}" },
+        { id: "b", text: "let arr = [1, 2, 3]" },
+        { id: "c", text: "let arr = (1, 2, 3)" },
+      ],
+      correctOptionId: "b",
+    },
+    {
+      id: "desert-final",
+      title: "Храм JavaScript",
+      icon: "🏛️",
+      theory:
+        "Финальная миссия курса собирает всё вместе: функции, параметры, циклы и массивы.\n\n" +
+        "Функции помогают переиспользовать код, параметры передают данные, циклы повторяют действия, массивы хранят набор значений.",
+      question: "Что лучше всего описывает массив?",
+      options: [
+        { id: "a", text: "Это условие для проверки" },
+        { id: "b", text: "Это способ хранить несколько значений в одном месте" },
+        { id: "c", text: "Это цикл" },
+      ],
+      correctOptionId: "b",
+    },
+  ],
+};
 
 const CoursePage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { data, completeMission } = useEduQuest();
 
-  useEffect(() => {
-    if (params.id && params.id !== COURSE_ID) navigate("/courses");
-  }, [params.id, navigate]);
+  const courseId = params.id ?? "forest-basics";
 
   const course = useMemo(() => {
     if (!data) return null;
-    return data.courses.find((c: any) => c.id === COURSE_ID) ?? null;
-  }, [data]);
+    return data.courses.find((c: any) => c.id === courseId) ?? null;
+  }, [data, courseId]);
+
+  const missionContentList = COURSE_CONTENT[courseId] ?? [];
 
   const missions = useMemo(() => {
     if (!course) return [];
     return course.missions.map((m: any) => {
-      const content = FOREST_MISSIONS.find((x) => x.id === m.id);
+      const content = missionContentList.find((x) => x.id === m.id);
       return {
         ...m,
-        icon: content?.icon ?? "🌿",
-        title: content?.title ?? m.title,
+        icon: content?.icon ?? "📘",
+        displayTitle: content?.title ?? m.title,
       };
     });
-  }, [course]);
+  }, [course, missionContentList]);
 
   const firstUnlockedId = useMemo(() => {
     const first = missions.find((m: any) => !m.locked);
-    return first?.id ?? "algorithms";
+    return first?.id ?? missions[0]?.id ?? "";
   }, [missions]);
 
-  const [activeMissionId, setActiveMissionId] = useState<string>("algorithms");
+  const [activeMissionId, setActiveMissionId] = useState<string>("");
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [answerState, setAnswerState] = useState<AnswerState>("idle");
   const [showReward, setShowReward] = useState(false);
-  const [rewardXp, setRewardXp] = useState<number>(0);
+  const [rewardXp, setRewardXp] = useState(0);
 
   useEffect(() => {
     if (firstUnlockedId) setActiveMissionId(firstUnlockedId);
   }, [firstUnlockedId]);
 
   const activeContent = useMemo(() => {
-    return FOREST_MISSIONS.find((m) => m.id === activeMissionId) ?? FOREST_MISSIONS[0];
-  }, [activeMissionId]);
+    return missionContentList.find((m) => m.id === activeMissionId) ?? null;
+  }, [missionContentList, activeMissionId]);
 
   const activeMission = useMemo(() => {
     return missions.find((m: any) => m.id === activeMissionId) ?? null;
@@ -165,20 +237,22 @@ const CoursePage = () => {
     return missions.filter((m: any) => m.completed).length;
   }, [missions]);
 
-  const totalCount = missions.length || 5;
-  const progressPercent = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
+  const totalCount = missions.length || 1;
+  const progressPercent = totalCount
+    ? Math.round((completedCount / totalCount) * 100)
+    : 0;
 
-  const resetAnswer = () => {
+  const resetAnswerState = () => {
     setSelectedOptionId(null);
     setAnswerState("idle");
   };
 
   const openMission = (missionId: string) => {
-    const m = missions.find((x: any) => x.id === missionId);
-    if (!m || m.locked) return;
+    const mission = missions.find((m: any) => m.id === missionId);
+    if (!mission || mission.locked) return;
 
     setActiveMissionId(missionId);
-    resetAnswer();
+    resetAnswerState();
   };
 
   const handleSelect = (optionId: string) => {
@@ -190,37 +264,54 @@ const CoursePage = () => {
   };
 
   const checkAnswer = () => {
-    if (!selectedOptionId) return;
-    if (!activeContent) return;
+    if (!selectedOptionId || !activeContent) return;
 
     const isCorrect = selectedOptionId === activeContent.correctOptionId;
     setAnswerState(isCorrect ? "checked_correct" : "checked_wrong");
   };
 
-  const goNextUnlocked = () => {
+  const getNextMission = () => {
     const idx = missions.findIndex((m: any) => m.id === activeMissionId);
-    const next = missions[idx + 1];
-    if (next && !next.locked) {
-      setActiveMissionId(next.id);
-      resetAnswer();
-      return;
-    }
+    return missions[idx + 1] ?? null;
   };
 
-  const finishMission = (awardXp: boolean) => {
-  if (!activeMission) return;
-  if (activeMission.completed) return;
+  const goNext = () => {
+    const nextMission = getNextMission();
 
-  const xp = awardXp ? (activeMission.xp ?? 0) : 0;
+    if (nextMission && !nextMission.locked) {
+      setActiveMissionId(nextMission.id);
+      resetAnswerState();
+      return;
+    }
 
-  completeMission(COURSE_ID, activeMission.id, { awardXp });
+    if (courseId === "forest-basics") {
+      const nextCourse = data?.courses.find((c: any) => c.id === "js-desert");
+      if (nextCourse && !nextCourse.locked) {
+        navigate("/course/js-desert");
+        return;
+      }
+    }
 
-  setRewardXp(xp);
-  setShowReward(true);
+    navigate("/courses");
+  };
 
-};
+  const finishMission = () => {
+    if (!activeMission) return;
+    if (activeMission.completed) return;
+    if (answerState !== "checked_correct" && answerState !== "checked_wrong") return;
 
-  if (!data || !course) return <div className={styles.loading}>Загрузка...</div>;
+    const awardXp = answerState === "checked_correct";
+    const xp = awardXp ? activeMission.xp ?? 0 : 0;
+
+    completeMission(courseId, activeMission.id, { awardXp });
+
+    setRewardXp(xp);
+    setShowReward(true);
+  };
+
+  if (!data || !course) {
+    return <div className={styles.loading}>Загрузка...</div>;
+  }
 
   return (
     <div className={styles.page}>
@@ -228,9 +319,16 @@ const CoursePage = () => {
         ← Назад к курсам
       </button>
 
-      {}
-      <section className={styles.courseCard}>
-        <div className={styles.courseIcon}>🌳</div>
+      <section
+        className={[
+          styles.courseCard,
+          courseId === "forest-basics" ? styles.courseForest : "",
+          courseId === "js-desert" ? styles.courseDesert : "",
+        ].join(" ")}
+      >
+        <div className={styles.courseIcon}>
+          {courseId === "forest-basics" ? "🌳" : "🏜️"}
+        </div>
 
         <div className={styles.courseInfo}>
           <h1 className={styles.courseTitle}>{course.title}</h1>
@@ -244,14 +342,15 @@ const CoursePage = () => {
           </div>
 
           <div className={styles.courseProgressBar}>
-            <div className={styles.courseProgressFill} style={{ width: `${progressPercent}%` }} />
+            <div
+              className={styles.courseProgressFill}
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
         </div>
       </section>
 
-      {}
       <section className={styles.grid}>
-        {}
         <aside className={styles.missions}>
           <h2 className={styles.missionsTitle}>Миссии курса</h2>
 
@@ -273,7 +372,6 @@ const CoursePage = () => {
                   ].join(" ")}
                   onClick={() => openMission(m.id)}
                   aria-disabled={isLocked ? "true" : "false"}
-                  title={isLocked ? "Миссия закрыта" : "Открыть миссию"}
                 >
                   <div className={styles.missionIconWrap}>
                     <div className={styles.missionIcon}>
@@ -282,7 +380,11 @@ const CoursePage = () => {
                   </div>
 
                   <div className={styles.missionText}>
-                    <div className={styles.missionName}>{m.title}</div>
+                    <div className={styles.missionNameRow}>
+                      <div className={styles.missionName}>{m.displayTitle}</div>
+                      {m.isFinal ? <span className={styles.finalBadge}>Финал</span> : null}
+                    </div>
+
                     <div className={styles.missionMeta}>
                       <span className={styles.xp}>⭐ +{m.xp} XP</span>
                       {isDone ? <span className={styles.done}>Завершено</span> : null}
@@ -296,11 +398,12 @@ const CoursePage = () => {
           </div>
         </aside>
 
-        {}
         <div className={styles.content}>
-          {!activeMission || activeMission.locked ? (
+          {!activeMission || activeMission.locked || !activeContent ? (
             <div className={styles.empty}>
-              <div className={styles.emptyIcon}>🌳</div>
+              <div className={styles.emptyIcon}>
+                {courseId === "forest-basics" ? "🌳" : "🏜️"}
+              </div>
               <div className={styles.emptyTitle}>Выберите миссию</div>
               <div className={styles.emptyText}>
                 Выберите миссию из списка слева, чтобы начать обучение
@@ -334,10 +437,15 @@ const CoursePage = () => {
                 <div className={styles.options}>
                   {activeContent.options.map((opt, idx) => {
                     const isSelected = selectedOptionId === opt.id;
+
                     const isWrongSelected =
                       answerState === "checked_wrong" && isSelected;
-                    const isCorrectSelected =
-                      answerState === "checked_correct" && isSelected;
+
+                    const isCorrectVisible =
+                      (answerState === "checked_correct" &&
+                        opt.id === activeContent.correctOptionId) ||
+                      (answerState === "checked_wrong" &&
+                        opt.id === activeContent.correctOptionId);
 
                     return (
                       <button
@@ -345,9 +453,9 @@ const CoursePage = () => {
                         type="button"
                         className={[
                           styles.option,
-                          isSelected ? styles.optionSelected : "",
+                          isSelected && answerState === "selected" ? styles.optionSelected : "",
                           isWrongSelected ? styles.optionWrong : "",
-                          isCorrectSelected ? styles.optionCorrect : "",
+                          isCorrectVisible ? styles.optionCorrect : "",
                         ].join(" ")}
                         onClick={() => handleSelect(opt.id)}
                       >
@@ -361,7 +469,7 @@ const CoursePage = () => {
                 </div>
 
                 <div className={styles.actions}>
-                  {answerState === "idle" || answerState === "selected" ? (
+                  {(answerState === "idle" || answerState === "selected") && (
                     <button
                       type="button"
                       className={styles.checkBtn}
@@ -370,38 +478,16 @@ const CoursePage = () => {
                     >
                       Проверить ответ
                     </button>
-                  ) : answerState === "checked_correct" ? (
+                  )}
+
+                  {(answerState === "checked_correct" || answerState === "checked_wrong") && (
                     <button
                       type="button"
                       className={styles.finishBtn}
-                      onClick={() => finishMission(true)}
+                      onClick={finishMission}
                     >
                       Завершить миссию
                     </button>
-                  ) : (
-                    <div className={styles.afterWrong}>
-                      <div className={styles.wrongHint}>
-                        Неверно. Можно попробовать ещё раз или перейти дальше без XP.
-                      </div>
-
-                      <div className={styles.afterWrongBtns}>
-                        <button
-                          type="button"
-                          className={styles.tryAgainBtn}
-                          onClick={resetAnswer}
-                        >
-                          Попробовать ещё
-                        </button>
-
-                        <button
-                          type="button"
-                          className={styles.skipBtn}
-                          onClick={() => finishMission(false)}
-                        >
-                          Дальше без XP
-                        </button>
-                      </div>
-                    </div>
                   )}
                 </div>
               </div>
@@ -410,7 +496,6 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {}
       {showReward && (
         <div className={styles.modalOverlay} role="dialog" aria-modal="true">
           <div className={styles.modal}>
@@ -427,9 +512,7 @@ const CoursePage = () => {
               <div className={styles.modalIcon}>⭐</div>
             </div>
 
-            <div className={styles.modalValue}>
-              {rewardXp > 0 ? `+${rewardXp} XP` : "0 XP"}
-            </div>
+            <div className={styles.modalValue}>+{rewardXp} XP</div>
 
             <div className={styles.modalText}>
               {rewardXp > 0 ? "Опыт успешно начислен" : "Опыт не начислен"}
@@ -449,10 +532,14 @@ const CoursePage = () => {
                 className={styles.modalPrimary}
                 onClick={() => {
                   setShowReward(false);
-                  goNextUnlocked();
+                  goNext();
                 }}
               >
-                Следующая миссия
+                {activeMission?.isFinal
+                  ? courseId === "forest-basics"
+                    ? "Следующий курс"
+                    : "К списку курсов"
+                  : "Следующая миссия"}
               </button>
             </div>
           </div>

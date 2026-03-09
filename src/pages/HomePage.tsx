@@ -149,11 +149,13 @@ const HomePage = () => {
             {nodes.map((n: MapNode) => {
               const locked = n.state === "locked";
               const isForest = n.id === "forest-basics";
+              const isDesert = n.id === "js-desert";
 
               const btnClass = [
                 styles.node,
                 locked ? styles.nodeLocked : styles.nodeActive,
                 isForest ? styles.nodeForest : "",
+                isDesert ? styles.nodeDesert : "",
               ]
                 .filter(Boolean)
                 .join(" ");

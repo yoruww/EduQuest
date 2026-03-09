@@ -12,14 +12,11 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
   margin: 10px 0 18px;
   padding: 10px 12px;
-
   font-size: 1rem;
   font-weight: 500;
   color: #111;
-
   border-radius: 12px;
 }
 
@@ -32,17 +29,16 @@
   outline-offset: 3px;
 }
 
+
 .courseCard {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
-
   padding: 22px;
   display: grid;
   grid-template-columns: 110px 1fr;
   gap: 18px;
   align-items: center;
-
   margin-bottom: 22px;
 }
 
@@ -50,12 +46,21 @@
   width: 96px;
   height: 96px;
   border-radius: 18px;
-  background: rgba(88, 197, 120, 0.12);
-  border: 3px solid rgba(58, 174, 86, 0.85);
-
+  background: rgba(91, 108, 255, 0.1);
+  border: 3px solid rgba(91, 108, 255, 0.28);
   display: grid;
   place-items: center;
   font-size: 2rem;
+}
+
+.courseForest .courseIcon {
+  background: rgba(58, 174, 86, 0.18);
+  border: 3px solid rgba(58, 174, 86, 0.45);
+}
+
+.courseDesert .courseIcon {
+  background: rgba(243, 156, 18, 0.18);
+  border: 3px solid rgba(243, 156, 18, 0.45);
 }
 
 .courseTitle {
@@ -105,6 +110,7 @@
   background: linear-gradient(135deg, #4f86ff, #6a7cff);
 }
 
+
 .grid {
   display: grid;
   grid-template-columns: 420px 1fr;
@@ -126,20 +132,18 @@
   gap: 14px;
 }
 
+
 .missionItem {
   width: 100%;
   text-align: left;
-
   background: rgba(255, 255, 255, 0.92);
   border-radius: 18px;
   border: 1px solid rgba(0, 0, 0, 0.06);
-
   padding: 16px;
   display: grid;
   grid-template-columns: 72px 1fr 14px;
   gap: 14px;
   align-items: center;
-
   box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   cursor: pointer;
@@ -159,10 +163,8 @@
   width: 64px;
   height: 64px;
   border-radius: 18px;
-
-  background: rgba(91, 108, 255, 0.10);
+  background: rgba(91, 108, 255, 0.1);
   border: 2px solid rgba(91, 108, 255, 0.18);
-
   display: grid;
   place-items: center;
 }
@@ -172,18 +174,32 @@
   height: 44px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.92);
-
   display: grid;
   place-items: center;
   font-size: 1.35rem;
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+}
+
+.missionNameRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .missionName {
   font-size: 1.05rem;
   font-weight: 700;
   color: #111;
-  margin-bottom: 6px;
+}
+
+.finalBadge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 187, 90, 0.35);
+  color: rgba(160, 92, 0, 0.95);
 }
 
 .missionMeta {
@@ -217,7 +233,7 @@
 }
 
 .missionDone .missionIconWrap {
-  background: rgba(58, 174, 86, 0.10);
+  background: rgba(58, 174, 86, 0.1);
   border-color: rgba(58, 174, 86, 0.22);
 }
 
@@ -230,13 +246,14 @@
   border-color: rgba(0, 0, 0, 0.04);
   box-shadow: none;
   transform: none;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .missionLocked:hover {
   transform: none;
   box-shadow: none;
 }
+
 
 .content {
   min-height: 520px;
@@ -247,7 +264,6 @@
   border-radius: 18px;
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
   padding: 46px 22px;
-
   display: grid;
   justify-items: center;
   text-align: center;
@@ -276,6 +292,13 @@
   border-radius: 18px;
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
   padding: 22px;
+}
+
+.missionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
 }
 
 .missionTitle {
@@ -318,7 +341,7 @@
   margin: 0;
   color: rgba(0, 0, 0, 0.75);
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.6;
   white-space: pre-line;
 }
 
@@ -342,18 +365,16 @@
 .option {
   width: 100%;
   text-align: left;
-
   border-radius: 14px;
-  border: 2px solid rgba(0, 0, 0, 0.10);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   background: #fff;
-
   padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-
   cursor: pointer;
-  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .option:hover {
@@ -372,11 +393,9 @@
   border-radius: 999px;
   display: grid;
   place-items: center;
-
   font-size: 0.9rem;
   font-weight: 800;
   color: #111;
-
   border: 2px solid rgba(0, 0, 0, 0.15);
   background: rgba(0, 0, 0, 0.03);
   flex: 0 0 auto;
@@ -401,17 +420,15 @@
 
 .optionCorrect {
   border-color: rgba(58, 174, 86, 0.9);
-  background: rgba(58, 174, 86, 0.10);
+  background: rgba(58, 174, 86, 0.1);
   box-shadow: 0 12px 18px rgba(58, 174, 86, 0.16);
 }
 
 .optionWrong {
   border-color: rgba(231, 76, 60, 0.95);
-  background: rgba(231, 76, 60, 0.10);
+  background: rgba(231, 76, 60, 0.1);
   box-shadow: 0 12px 18px rgba(231, 76, 60, 0.16);
 }
-
-/* Buttons */
 
 .actions {
   margin-top: 18px;
@@ -453,45 +470,6 @@
   color: #fff;
 }
 
-.afterWrong {
-  display: grid;
-  gap: 12px;
-}
-
-.wrongHint {
-  font-size: 0.95rem;
-  color: rgba(0, 0, 0, 0.62);
-  line-height: 1.4;
-}
-
-.afterWrongBtns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.tryAgainBtn,
-.skipBtn {
-  height: 48px;
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.tryAgainBtn {
-  background: rgba(0, 0, 0, 0.06);
-  color: #111;
-}
-
-.tryAgainBtn:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.skipBtn {
-  background: linear-gradient(135deg, #4f86ff, #6a7cff);
-  color: #fff;
-}
 
 .modalOverlay {
   position: fixed;
@@ -585,6 +563,7 @@
   background: linear-gradient(135deg, #4f86ff, #6a7cff);
   color: #fff;
 }
+
 
 @media (max-width: 1100px) {
   .grid {

@@ -184,7 +184,27 @@
   border: 4px solid rgba(58, 174, 86, 0.92);
 }
 
-.nodeActive:not(.nodeForest) .circle {
+.nodeDesert .circle {
+  border: 4px solid rgba(243, 156, 18, 0.95);
+}
+
+.nodeDesert .circleInner {
+  background: rgba(255, 248, 240, 0.98);
+}
+
+.nodeActive:not(.nodeForest):not(.nodeDesert) .circle {
+  border: 4px solid rgba(0, 0, 0, 0.06);
+}
+
+.nodeDesert .circle {
+  border: 4px solid rgba(243, 156, 18, 0.95);
+}
+
+.nodeDesert .circleInner {
+  background: rgba(255, 248, 240, 0.98);
+}
+
+.nodeActive:not(.nodeForest):not(.nodeDesert) .circle {
   border: 4px solid rgba(0, 0, 0, 0.06);
 }
 
