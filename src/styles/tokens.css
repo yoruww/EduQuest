@@ -1,0 +1,14 @@
+:root {
+  --font-size-base: 16px;
+
+  --container-max: 1440px;
+  --container-pad-x: 24px;
+
+  --header-h: 76px;
+  --radius-pill: 999px;
+
+  --brand: #5b6cff;
+  --text: #111;
+  --text-muted: #555;
+  --muted: rgba(0, 0, 0, 0.55);
+}

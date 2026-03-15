@@ -1,116 +1,103 @@
 import { useEffect, useState } from "react";
-import { initStorage, getStorage, saveStorage } from "../utils/storage";
+import type { EduQuestData, User, Course, Achievement } from "../types/types";
+import coursesData from "../mocks/courses.json";
+import userData from "../mocks/user.json";
+import achievementsData from "../mocks/achievements.json";
 
-type CompleteMissionOptions = {
-  awardXp?: boolean; // по умолчанию true
-};
+const STORAGE_KEY = "eduquest-data";
 
 export const useEduQuest = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<EduQuestData | null>(null);
 
   useEffect(() => {
-    const stored = initStorage();
-    setData(stored);
+    const stored = localStorage.getItem(STORAGE_KEY);
+
+    if (stored) {
+      setData(JSON.parse(stored) as EduQuestData);
+      return;
+    }
+
+    const initialData: EduQuestData = {
+      user: userData as User,
+      courses: coursesData as Course[],
+      achievements: achievementsData as Achievement[],
+    };
+
+    setData(initialData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
   }, []);
 
-  const updateData = (updated: any) => {
-    setData({ ...updated });
-    saveStorage(updated);
+  const updateData = (newData: EduQuestData) => {
+    setData(newData);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
   };
 
   const completeMission = (
     courseId: string,
     missionId: string,
-    options: CompleteMissionOptions = {}
+    xpEarned: number
   ) => {
-    const { awardXp = true } = options;
+    if (!data) return;
 
-    const updated = getStorage();
-    if (!updated) return;
+    const updatedCourses = data.courses.map((course) => {
+      if (course.id !== courseId) return course;
 
-    const course = updated.courses.find((c: any) => c.id === courseId);
-    if (!course) return;
+      const missionIndex = course.missions.findIndex(
+        (mission) => mission.id === missionId
+      );
 
-    const mission = course.missions.find((m: any) => m.id === missionId);
-    if (!mission || mission.completed) return;
+      const updatedMissions = course.missions.map((mission, index) => {
+        if (mission.id === missionId) {
+          return { ...mission, completed: true };
+        }
 
-    mission.completed = true;
+        if (index === missionIndex + 1) {
+          return { ...mission, locked: false };
+        }
 
-    // прогресс миссий — всегда, иначе не открыть следующую
-    if (!updated.user.completedMissions.includes(missionId)) {
-      updated.user.completedMissions.push(missionId);
-    }
+        return mission;
+      });
 
-    // награда — только если awardXp=true
-    if (awardXp) {
-      updated.user.stars += 1;
-      updated.user.xp += mission.xp;
-    }
+      const courseCompleted = updatedMissions.every((mission) => mission.completed);
 
-    // открыть следующую миссию
-    const missionIndex = course.missions.findIndex((m: any) => m.id === missionId);
-    if (course.missions[missionIndex + 1]) {
-      course.missions[missionIndex + 1].locked = false;
-    }
-
-    // если курс завершён — открыть следующий курс
-    const allCompleted = course.missions.every((m: any) => m.completed);
-    if (allCompleted && !course.completed) {
-      course.completed = true;
-
-      if (!updated.user.completedCourses.includes(courseId)) {
-        updated.user.completedCourses.push(courseId);
-      }
-
-      const courseIndex = updated.courses.findIndex((c: any) => c.id === courseId);
-      if (updated.courses[courseIndex + 1]) {
-        updated.courses[courseIndex + 1].locked = false;
-      }
-    }
-
-    checkAchievements(updated);
-    updateData(updated);
-  };
-
-  const checkAchievements = (updated: any) => {
-    const { user, achievements, courses } = updated;
-
-    achievements.forEach((achievement: any) => {
-      if (user.achievements.includes(achievement.id)) return;
-
-      switch (achievement.condition) {
-        case "complete-1-mission":
-          if (user.completedMissions.length >= 1) user.achievements.push(achievement.id);
-          break;
-
-        case "complete-full-cource":
-          if (user.completedCourses.length >= 1) user.achievements.push(achievement.id);
-          break;
-
-        case "earn-100-XP":
-          if (user.xp >= 100) user.achievements.push(achievement.id);
-          break;
-
-        case "complete-all":
-          if (user.completedCourses.length === courses.length) user.achievements.push(achievement.id);
-          break;
-      }
+      return {
+        ...course,
+        completed: courseCompleted,
+        missions: updatedMissions,
+      };
     });
-  };
 
-  const getCourseProgress = (courseId: string) => {
-    if (!data) return 0;
+    const currentCourseIndex = updatedCourses.findIndex(
+      (course) => course.id === courseId
+    );
 
-    const course = data.courses.find((c: any) => c.id === courseId);
-    if (!course) return 0;
+    if (
+      currentCourseIndex !== -1 &&
+      updatedCourses[currentCourseIndex].completed &&
+      updatedCourses[currentCourseIndex + 1]
+    ) {
+      updatedCourses[currentCourseIndex + 1] = {
+        ...updatedCourses[currentCourseIndex + 1],
+        locked: false,
+      };
+    }
 
-    const completed = course.missions.filter((m: any) => m.completed).length;
-    return Math.round((completed / course.missions.length) * 100);
+    const updatedUser: User = {
+      ...data.user,
+      xp: data.user.xp + xpEarned,
+    };
+
+    const updatedData: EduQuestData = {
+      ...data,
+      user: updatedUser,
+      courses: updatedCourses,
+    };
+
+    updateData(updatedData);
   };
 
   return {
     data,
     completeMission,
-    getCourseProgress,
   };
 };

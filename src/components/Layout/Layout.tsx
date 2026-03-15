@@ -1,18 +1,14 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { useEduQuest } from "../../hooks/useEduQuest";
+import { NAV_ITEMS } from "./constants";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const Layout = ({ children }: Props) => {
+const Layout = () => {
   const { data } = useEduQuest();
 
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        {}
         <div className={styles.headerInner}>
           <Link to="/home" className={styles.logoBlock} aria-label="На главную">
             <div className={styles.logoIcon}>
@@ -35,26 +31,15 @@ const Layout = ({ children }: Props) => {
           </Link>
 
           <nav className={styles.nav}>
-            <NavLink
-              to="/home"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              Карта мира
-            </NavLink>
-
-            <NavLink
-              to="/courses"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              Курсы
-            </NavLink>
-
-            <NavLink
-              to="/profile"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              Профиль
-            </NavLink>
+            {NAV_ITEMS.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                {label}
+              </NavLink>
+            ))}
           </nav>
 
           <div className={styles.rightBlock}>
@@ -72,9 +57,10 @@ const Layout = ({ children }: Props) => {
         </div>
       </header>
 
-      {}
       <main className={styles.main}>
-        <div className={styles.mainInner}>{children}</div>
+        <div className={styles.mainInner}>
+          <Outlet />
+        </div>
       </main>
     </div>
   );

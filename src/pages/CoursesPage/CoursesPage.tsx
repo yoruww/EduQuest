@@ -1,100 +1,32 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEduQuest } from "../hooks/useEduQuest";
+import { useEduQuest } from "../../hooks/useEduQuest";
+import { SOON_COURSES } from "./constants";
+import { buildCourseCards, getCardThemeClass } from "./helpers";
+import type { CourseCardView } from "./types";
 import styles from "./CoursesPage.module.css";
-
-type CourseCardView = {
-  id: string;
-  title: string;
-  description: string;
-  missionsCount: number;
-  completedMissions: number;
-  locked: boolean;
-  icon: string;
-  soon?: boolean;
-};
 
 const CoursesPage = () => {
   const navigate = useNavigate();
   const { data } = useEduQuest();
 
-  const cards: CourseCardView[] = useMemo(() => {
+  const cards = useMemo((): CourseCardView[] => {
     if (!data) return [];
 
-    const forest = data.courses.find((c: any) => c.id === "forest-basics");
-    const desert = data.courses.find((c: any) => c.id === "js-desert");
-
-    const forestCompleted =
-      forest?.missions?.filter((m: any) => m.completed).length ?? 0;
-    const forestCount = forest?.missions?.length ?? 5;
-
-    const desertCompleted =
-      desert?.missions?.filter((m: any) => m.completed).length ?? 0;
-    const desertCount = desert?.missions?.length ?? 5;
-
-    return [
-      {
-        id: "forest-basics",
-        title: forest?.title ?? "Лес Основ",
-        description:
-          forest?.description ??
-          "Стартовая локация. Изучение базовых понятий программирования.",
-        missionsCount: forestCount,
-        completedMissions: forestCompleted,
-        locked: false,
-        icon: "🌳",
-      },
-      {
-        id: "js-desert",
-        title: desert?.title ?? "Пустыня JavaScript",
-        description:
-          desert?.description ?? "Изучение функций, циклов и массивов.",
-        missionsCount: desertCount,
-        completedMissions: desertCompleted,
-        locked: desert?.locked ?? true,
-        icon: "🏜️",
-      },
-
-      // Заглушки
-      {
-        id: "react-castle",
-        title: "Замок React",
-        description: "Изучение компонентов и состояния React.",
-        missionsCount: 5,
-        completedMissions: 0,
-        locked: true,
-        icon: "🏰",
-        soon: true,
-      },
-      {
-        id: "algo-mountains",
-        title: "Горы Алгоритмов",
-        description: "Сложные алгоритмы и структуры данных.",
-        missionsCount: 5,
-        completedMissions: 0,
-        locked: true,
-        icon: "⛰️",
-        soon: true,
-      },
-      {
-        id: "api-ocean",
-        title: "Океан API",
-        description: "Работа с API и асинхронным кодом.",
-        missionsCount: 5,
-        completedMissions: 0,
-        locked: true,
-        icon: "🌊",
-        soon: true,
-      },
-    ];
+    return buildCourseCards({
+      courses: data.courses,
+      soonCourses: SOON_COURSES,
+    });
   }, [data]);
-
-  if (!data) return <div className={styles.loading}>Загрузка...</div>;
 
   const openCourse = (card: CourseCardView) => {
     if (card.locked || card.soon) return;
     navigate(`/course/${card.id}`);
   };
+
+  if (!data) {
+    return <div className={styles.loading}>Загрузка...</div>;
+  }
 
   return (
     <div className={styles.page}>
@@ -120,9 +52,11 @@ const CoursesPage = () => {
               type="button"
               className={[
                 styles.card,
-                card.locked || card.soon ? styles.cardLocked : styles.cardActive,
-                card.id === "js-desert" ? styles.cardDesert : "",
-              ].join(" ")}
+                isOpen ? styles.cardActive : styles.cardLocked,
+                getCardThemeClass(card.id, styles),
+              ]
+                .filter(Boolean)
+                .join(" ")}
               onClick={() => openCourse(card)}
               disabled={card.locked || card.soon}
               title={
@@ -149,7 +83,6 @@ const CoursesPage = () => {
                 <h3 className={styles.cardTitle}>{card.title}</h3>
                 <p className={styles.desc}>{card.description}</p>
 
-                {}
                 {isOpen ? (
                   <>
                     <span className={styles.metaText}>
@@ -176,19 +109,9 @@ const CoursesPage = () => {
                     </div>
                   </>
                 ) : (
-                  <>
-                    {}
-                    {!card.soon && (
-                      <span className={styles.metaText}>
-                        {card.missionsCount} миссий
-                      </span>
-                    )}
-
-                    {}
-                    {card.soon && (
-                      <span className={styles.metaText}>Скоро открытие</span>
-                    )}
-                  </>
+                  <span className={styles.metaText}>
+                    {card.soon ? "Скоро открытие" : `${card.missionsCount} миссий`}
+                  </span>
                 )}
               </div>
             </button>
