@@ -1,7 +1,12 @@
 import userMock from "../mocks/user.json";
 import coursesMock from "../mocks/courses.json";
 import achievementsMock from "../mocks/achievements.json";
-import type { EduQuestData, User, Course, Achievement } from "../types/eduquest";
+import type {
+  EduQuestData,
+  User,
+  Course,
+  Achievement,
+} from "../types/eduquest";
 
 const STORAGE_KEY = "eduquest-data";
 

@@ -1,35 +1,18 @@
 import { useEffect, useState } from "react";
-import type { EduQuestData, User, Course, Achievement } from "../types/types";
-import coursesData from "../mocks/courses.json";
-import userData from "../mocks/user.json";
-import achievementsData from "../mocks/achievements.json";
-
-const STORAGE_KEY = "eduquest-data";
+import type { EduQuestData } from "../types/eduquest";
+import { getStorage, initStorage, saveStorage } from "../utils/storage";
 
 export const useEduQuest = () => {
   const [data, setData] = useState<EduQuestData | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-
-    if (stored) {
-      setData(JSON.parse(stored) as EduQuestData);
-      return;
-    }
-
-    const initialData: EduQuestData = {
-      user: userData as User,
-      courses: coursesData as Course[],
-      achievements: achievementsData as Achievement[],
-    };
-
-    setData(initialData);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    const stored = initStorage();
+    setData(stored);
   }, []);
 
   const updateData = (newData: EduQuestData) => {
     setData(newData);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+    saveStorage(newData);
   };
 
   const completeMission = (
@@ -37,9 +20,10 @@ export const useEduQuest = () => {
     missionId: string,
     xpEarned: number
   ) => {
-    if (!data) return;
+    const currentData = getStorage();
+    if (!currentData) return;
 
-    const updatedCourses = data.courses.map((course) => {
+    const updatedCourses = currentData.courses.map((course) => {
       if (course.id !== courseId) return course;
 
       const missionIndex = course.missions.findIndex(
@@ -82,13 +66,13 @@ export const useEduQuest = () => {
       };
     }
 
-    const updatedUser: User = {
-      ...data.user,
-      xp: data.user.xp + xpEarned,
+    const updatedUser = {
+      ...currentData.user,
+      xp: currentData.user.xp + xpEarned,
     };
 
     const updatedData: EduQuestData = {
-      ...data,
+      ...currentData,
       user: updatedUser,
       courses: updatedCourses,
     };
