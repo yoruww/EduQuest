@@ -1,9 +1,5 @@
 {
-  "id": "user-1",
   "name": "Пользователь",
-  "stars": 0,
   "xp": 0,
-  "completedMissions": [],
-  "completedCourses": [],
   "achievements": []
 }

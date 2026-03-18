@@ -1,13 +1,55 @@
 import { useEffect, useState } from "react";
-import type { EduQuestData } from "../types/eduquest";
-import { getStorage, initStorage, saveStorage } from "../utils/storage";
+import type { Course, EduQuestData } from "../types/eduquest";
+import { initStorage, saveStorage } from "../utils/storage";
+import { applyUnlockedAchievements } from "../utils/achievements";
+
+const unlockNextMission = (
+  missions: Course["missions"],
+  missionId: string
+): Course["missions"] => {
+  const missionIndex = missions.findIndex((mission) => mission.id === missionId);
+
+  return missions.map((mission, index) => {
+    if (mission.id === missionId) {
+      return { ...mission, completed: true };
+    }
+
+    if (index === missionIndex + 1) {
+      return { ...mission, locked: false };
+    }
+
+    return mission;
+  });
+};
+
+const unlockNextCourse = (courses: Course[], courseId: string): Course[] => {
+  const currentCourseIndex = courses.findIndex((course) => course.id === courseId);
+
+  if (currentCourseIndex === -1) {
+    return courses;
+  }
+
+  const currentCourse = courses[currentCourseIndex];
+
+  if (!currentCourse.completed || !courses[currentCourseIndex + 1]) {
+    return courses;
+  }
+
+  return courses.map((course, index) => {
+    if (index === currentCourseIndex + 1) {
+      return { ...course, locked: false };
+    }
+
+    return course;
+  });
+};
 
 export const useEduQuest = () => {
   const [data, setData] = useState<EduQuestData | null>(null);
 
   useEffect(() => {
-    const stored = initStorage();
-    setData(stored);
+    const storedData = initStorage();
+    setData(storedData);
   }, []);
 
   const updateData = (newData: EduQuestData) => {
@@ -20,28 +62,16 @@ export const useEduQuest = () => {
     missionId: string,
     xpEarned: number
   ) => {
-    const currentData = getStorage();
-    if (!currentData) return;
+    if (!data) {
+      return;
+    }
 
-    const updatedCourses = currentData.courses.map((course) => {
-      if (course.id !== courseId) return course;
+    const updatedCourses = data.courses.map((course) => {
+      if (course.id !== courseId) {
+        return course;
+      }
 
-      const missionIndex = course.missions.findIndex(
-        (mission) => mission.id === missionId
-      );
-
-      const updatedMissions = course.missions.map((mission, index) => {
-        if (mission.id === missionId) {
-          return { ...mission, completed: true };
-        }
-
-        if (index === missionIndex + 1) {
-          return { ...mission, locked: false };
-        }
-
-        return mission;
-      });
-
+      const updatedMissions = unlockNextMission(course.missions, missionId);
       const courseCompleted = updatedMissions.every((mission) => mission.completed);
 
       return {
@@ -51,33 +81,20 @@ export const useEduQuest = () => {
       };
     });
 
-    const currentCourseIndex = updatedCourses.findIndex(
-      (course) => course.id === courseId
-    );
-
-    if (
-      currentCourseIndex !== -1 &&
-      updatedCourses[currentCourseIndex].completed &&
-      updatedCourses[currentCourseIndex + 1]
-    ) {
-      updatedCourses[currentCourseIndex + 1] = {
-        ...updatedCourses[currentCourseIndex + 1],
-        locked: false,
-      };
-    }
-
-    const updatedUser = {
-      ...currentData.user,
-      xp: currentData.user.xp + xpEarned,
-    };
+    const coursesWithUnlockedNext = unlockNextCourse(updatedCourses, courseId);
 
     const updatedData: EduQuestData = {
-      ...currentData,
-      user: updatedUser,
-      courses: updatedCourses,
+      ...data,
+      user: {
+        ...data.user,
+        xp: data.user.xp + xpEarned,
+      },
+      courses: coursesWithUnlockedNext,
     };
 
-    updateData(updatedData);
+    const dataWithAchievements = applyUnlockedAchievements(updatedData);
+
+    updateData(dataWithAchievements);
   };
 
   return {

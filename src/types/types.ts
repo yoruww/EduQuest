@@ -33,7 +33,6 @@ export interface Course {
 export interface User {
   name: string;
   xp: number;
-  stars: number;
   achievements: string[];
 }
 

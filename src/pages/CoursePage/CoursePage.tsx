@@ -1,47 +1,52 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { APP_ROUTES } from "../../constants/routes";
 import { useEduQuest } from "../../hooks/useEduQuest";
-import type { Course, Mission } from "../../types/types";
 import { COURSE_CONTENT } from "./courseContent";
-import type { AnswerState } from "./types";
+import { DEFAULT_COURSE_ID } from "./constants";
+import {
+  buildMissionWithUiList,
+  getActiveMission,
+  getActiveMissionContent,
+  getCompletedMissionsCount,
+  getCourseById,
+  getCourseIcon,
+  getCourseThemeClass,
+  getFirstUnlockedMissionId,
+  getNextMission,
+  getNextUnlockedCourseRoute,
+  getProgressPercent,
+} from "./helpers";
+import type { AnswerState, MissionWithUi } from "./types";
 import styles from "./CoursePage.module.css";
-
-type MissionWithUi = Mission & {
-  icon: string;
-  displayTitle: string;
-};
 
 const CoursePage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { data, completeMission } = useEduQuest();
 
-  const courseId = params.id ?? "forest-basics";
+  const courseId = params.id ?? DEFAULT_COURSE_ID;
 
-  const course = useMemo<Course | null>(() => {
-    if (!data) return null;
-    return data.courses.find((item) => item.id === courseId) ?? null;
+  const course = useMemo(() => {
+    if (!data) {
+      return null;
+    }
+
+    return getCourseById(data.courses, courseId);
   }, [data, courseId]);
 
   const missionContentList = COURSE_CONTENT[courseId] ?? [];
 
   const missions = useMemo<MissionWithUi[]>(() => {
-    if (!course) return [];
+    if (!course) {
+      return [];
+    }
 
-    return course.missions.map((mission) => {
-      const content = missionContentList.find((item) => item.id === mission.id);
-
-      return {
-        ...mission,
-        icon: content?.icon ?? "📘",
-        displayTitle: content?.title ?? mission.title,
-      };
-    });
+    return buildMissionWithUiList(course, missionContentList);
   }, [course, missionContentList]);
 
   const firstUnlockedId = useMemo(() => {
-    const first = missions.find((mission) => !mission.locked);
-    return first?.id ?? missions[0]?.id ?? "";
+    return getFirstUnlockedMissionId(missions);
   }, [missions]);
 
   const [activeMissionId, setActiveMissionId] = useState("");
@@ -50,68 +55,83 @@ const CoursePage = () => {
   const [showReward, setShowReward] = useState(false);
   const [rewardXp, setRewardXp] = useState(0);
 
-  useEffect(() => {
-    if (firstUnlockedId) {
-      setActiveMissionId(firstUnlockedId);
-      setSelectedOptionId(null);
-      setAnswerState("idle");
-      setShowReward(false);
-      setRewardXp(0);
-    }
-  }, [firstUnlockedId, courseId]);
-
-  const activeContent = useMemo(() => {
-    return missionContentList.find((mission) => mission.id === activeMissionId) ?? null;
-  }, [missionContentList, activeMissionId]);
-
-  const activeMission = useMemo<MissionWithUi | null>(() => {
-    return missions.find((mission) => mission.id === activeMissionId) ?? null;
-  }, [missions, activeMissionId]);
-
-  const completedCount = useMemo(() => {
-    return missions.filter((mission) => mission.completed).length;
-  }, [missions]);
-
-  const totalCount = missions.length || 1;
-  const progressPercent = totalCount
-    ? Math.round((completedCount / totalCount) * 100)
-    : 0;
-
   const resetAnswerState = () => {
     setSelectedOptionId(null);
     setAnswerState("idle");
   };
 
+  const resetRewardState = () => {
+    setShowReward(false);
+    setRewardXp(0);
+  };
+
+  const resetMissionUiState = () => {
+    resetAnswerState();
+    resetRewardState();
+  };
+
+  useEffect(() => {
+    if (!firstUnlockedId) {
+      return;
+    }
+
+    setActiveMissionId(firstUnlockedId);
+    resetMissionUiState();
+  }, [firstUnlockedId, courseId]);
+
+  const activeContent = useMemo(() => {
+    return getActiveMissionContent(missionContentList, activeMissionId);
+  }, [missionContentList, activeMissionId]);
+
+  const activeMission = useMemo(() => {
+    return getActiveMission(missions, activeMissionId);
+  }, [missions, activeMissionId]);
+
+  const completedCount = useMemo(() => {
+    return getCompletedMissionsCount(missions);
+  }, [missions]);
+
+  const totalCount = missions.length;
+  const progressPercent = getProgressPercent(completedCount, totalCount);
+
   const openMission = (missionId: string) => {
     const mission = missions.find((item) => item.id === missionId);
-    if (!mission || mission.locked) return;
+
+    if (!mission || mission.locked) {
+      return;
+    }
 
     setActiveMissionId(missionId);
     resetAnswerState();
   };
 
   const handleSelect = (optionId: string) => {
-    if (!activeMission || activeMission.locked) return;
-    if (answerState === "checked_correct" || answerState === "checked_wrong") return;
+    if (!activeMission || activeMission.locked) {
+      return;
+    }
+
+    if (
+      answerState === "checked_correct" ||
+      answerState === "checked_wrong"
+    ) {
+      return;
+    }
 
     setSelectedOptionId(optionId);
     setAnswerState("selected");
   };
 
   const checkAnswer = () => {
-    if (!selectedOptionId || !activeContent) return;
+    if (!selectedOptionId || !activeContent) {
+      return;
+    }
 
     const isCorrect = selectedOptionId === activeContent.correctOptionId;
     setAnswerState(isCorrect ? "checked_correct" : "checked_wrong");
   };
 
-  const getNextMission = (): MissionWithUi | null => {
-    const index = missions.findIndex((mission) => mission.id === activeMissionId);
-    return missions[index + 1] ?? null;
-  };
-
   const goNext = () => {
-    const nextMission = getNextMission();
+    const nextMission = getNextMission(missions, activeMissionId);
 
     if (nextMission && !nextMission.locked) {
       setActiveMissionId(nextMission.id);
@@ -119,25 +139,34 @@ const CoursePage = () => {
       return;
     }
 
-  if (courseId === "forest-basics") {
-    const nextCourse = data?.courses.find((item) => item.id === "js-desert");
-    if (nextCourse && !nextCourse.locked) {
-      setSelectedOptionId(null);
-      setAnswerState("idle");
-      setShowReward(false);
-      setRewardXp(0);
-      navigate("/course/js-desert");
-      return;
-    }
-  }
+    if (data) {
+      const nextCourseRoute = getNextUnlockedCourseRoute(data.courses, courseId);
 
-    navigate("/courses");
+      if (nextCourseRoute) {
+        resetMissionUiState();
+        navigate(nextCourseRoute);
+        return;
+      }
+    }
+
+    navigate(APP_ROUTES.courses);
   };
 
   const finishMission = () => {
-    if (!activeMission) return;
-    if (activeMission.completed) return;
-    if (answerState !== "checked_correct" && answerState !== "checked_wrong") return;
+    if (!activeMission) {
+      return;
+    }
+
+    if (activeMission.completed) {
+      return;
+    }
+
+    if (
+      answerState !== "checked_correct" &&
+      answerState !== "checked_wrong"
+    ) {
+      return;
+    }
 
     const xp = answerState === "checked_correct" ? activeMission.xp : 0;
 
@@ -150,22 +179,21 @@ const CoursePage = () => {
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
+  const courseIcon = getCourseIcon(courseId);
+  const courseThemeClass = getCourseThemeClass(courseId, styles);
+
   return (
     <div className={styles.page}>
-      <button className={styles.back} type="button" onClick={() => navigate("/courses")}>
+      <button
+        className={styles.back}
+        type="button"
+        onClick={() => navigate(APP_ROUTES.courses)}
+      >
         ← Назад к курсам
       </button>
 
-      <section
-        className={[
-          styles.courseCard,
-          courseId === "forest-basics" ? styles.courseForest : "",
-          courseId === "js-desert" ? styles.courseDesert : "",
-        ].join(" ")}
-      >
-        <div className={styles.courseIcon}>
-          {courseId === "forest-basics" ? "🌳" : "🏜️"}
-        </div>
+      <section className={[styles.courseCard, courseThemeClass].join(" ")}>
+        <div className={styles.courseIcon}>{courseIcon}</div>
 
         <div className={styles.courseInfo}>
           <h1 className={styles.courseTitle}>{course.title}</h1>
@@ -174,7 +202,7 @@ const CoursePage = () => {
           <div className={styles.courseProgressRow}>
             <span className={styles.courseProgressLabel}>Прогресс курса</span>
             <span className={styles.courseProgressValue}>
-              {completedCount}/{totalCount}
+              {completedCount}/{totalCount || 1}
             </span>
           </div>
 
@@ -218,7 +246,9 @@ const CoursePage = () => {
 
                   <div className={styles.missionText}>
                     <div className={styles.missionNameRow}>
-                      <div className={styles.missionName}>{mission.displayTitle}</div>
+                      <div className={styles.missionName}>
+                        {mission.displayTitle}
+                      </div>
                       {mission.isFinal ? (
                         <span className={styles.finalBadge}>Финал</span>
                       ) : null}
@@ -226,7 +256,9 @@ const CoursePage = () => {
 
                     <div className={styles.missionMeta}>
                       <span className={styles.xp}>⭐ +{mission.xp} XP</span>
-                      {isDone ? <span className={styles.done}>Завершено</span> : null}
+                      {isDone ? (
+                        <span className={styles.done}>Завершено</span>
+                      ) : null}
                     </div>
                   </div>
 
@@ -240,9 +272,7 @@ const CoursePage = () => {
         <div className={styles.content}>
           {!activeMission || activeMission.locked || !activeContent ? (
             <div className={styles.empty}>
-              <div className={styles.emptyIcon}>
-                {courseId === "forest-basics" ? "🌳" : "🏜️"}
-              </div>
+              <div className={styles.emptyIcon}>{courseIcon}</div>
               <div className={styles.emptyTitle}>Выберите миссию</div>
               <div className={styles.emptyText}>
                 Выберите миссию из списка слева, чтобы начать обучение
@@ -253,7 +283,9 @@ const CoursePage = () => {
               <div className={styles.missionHeader}>
                 <div>
                   <h3 className={styles.missionTitle}>{activeContent.title}</h3>
-                  <div className={styles.missionXp}>⭐ +{activeMission.xp} XP</div>
+                  <div className={styles.missionXp}>
+                    ⭐ +{activeMission.xp} XP
+                  </div>
                 </div>
               </div>
 
@@ -281,10 +313,9 @@ const CoursePage = () => {
                       answerState === "checked_wrong" && isSelected;
 
                     const isCorrectVisible =
-                      (answerState === "checked_correct" &&
-                        option.id === activeContent.correctOptionId) ||
-                      (answerState === "checked_wrong" &&
-                        option.id === activeContent.correctOptionId);
+                      option.id === activeContent.correctOptionId &&
+                      (answerState === "checked_correct" ||
+                        answerState === "checked_wrong");
 
                     return (
                       <button
@@ -321,7 +352,8 @@ const CoursePage = () => {
                     </button>
                   )}
 
-                  {(answerState === "checked_correct" || answerState === "checked_wrong") && (
+                  {(answerState === "checked_correct" ||
+                    answerState === "checked_wrong") && (
                     <button
                       type="button"
                       className={styles.finishBtn}
@@ -377,9 +409,7 @@ const CoursePage = () => {
                 }}
               >
                 {activeMission?.isFinal
-                  ? courseId === "forest-basics"
-                    ? "Следующий курс"
-                    : "К списку курсов"
+                  ? "Следующий шаг"
                   : "Следующая миссия"}
               </button>
             </div>

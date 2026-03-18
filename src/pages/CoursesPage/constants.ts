@@ -1,5 +1,7 @@
 import type { SoonCourseConfig } from "./types";
 
+export const DEFAULT_SOON_COURSE_MISSIONS_COUNT = 5;
+
 export const SOON_COURSES: SoonCourseConfig[] = [
   {
     id: "react-castle",

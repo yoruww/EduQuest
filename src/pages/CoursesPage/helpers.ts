@@ -1,4 +1,5 @@
-import type { Course } from "../../types/types";
+import type { Course } from "../../types/eduquest";
+import { DEFAULT_SOON_COURSE_MISSIONS_COUNT } from "./constants";
 import type {
   BuildCourseCardsParams,
   CourseCardView,
@@ -50,7 +51,7 @@ const mapSoonCourseToCard = (course: SoonCourseConfig): CourseCardView => {
     id: course.id,
     title: course.title,
     description: course.description,
-    missionsCount: 5,
+    missionsCount: DEFAULT_SOON_COURSE_MISSIONS_COUNT,
     completedMissions: 0,
     locked: true,
     icon: course.icon,

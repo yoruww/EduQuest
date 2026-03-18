@@ -9,23 +9,22 @@
   line-height: 1.5;
 }
 
-
 .header {
   margin-bottom: 22px;
 }
 
 .title {
-  font-size: 2.5rem; 
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 700;
   line-height: 1.2;
-  color: #111;
+  color: rgba(0, 0, 0, 0.8);
   margin-bottom: 6px;
 }
 
 .subtitle {
-  font-size: 1rem; 
+  font-size: 1rem;
   line-height: 1.6;
-  color: rgba(0, 0, 0, 0.55);
+  color: rgba(0, 0, 0, 0.52);
 }
 
 .grid {
@@ -35,28 +34,28 @@
   align-items: start;
 }
 
-
 .card {
   border-radius: 18px;
   padding: 22px;
   text-align: left;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease,
+    background-color 0.18s ease;
   outline: none;
 }
 
 .cardActive {
-  background: #ffffff;
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.07);
   cursor: pointer;
 }
 
 .cardActive:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.09);
 }
 
 .cardActive:focus-visible {
-  box-shadow: 0 0 0 3px rgba(91, 108, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(91, 108, 255, 0.28);
 }
 
 .cardLocked {
@@ -64,6 +63,11 @@
   box-shadow: none;
   opacity: 0.75;
   cursor: default;
+}
+
+.cardLocked:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .topRow {
@@ -80,23 +84,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .cardActive .iconWrap {
-  background: rgba(58, 174, 86, 0.10);
+  background: rgba(58, 174, 86, 0.08);
   border: 2px solid #ffffff;
-  outline: 2px solid rgba(58, 174, 86, 0.55);
+  outline: 2px solid rgba(58, 174, 86, 0.45);
   outline-offset: -4px;
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
 }
 
 .cardDesert.cardActive .iconWrap {
-  background: rgba(243, 156, 18, 0.12);
+  background: rgba(243, 156, 18, 0.1);
   border: 2px solid #ffffff;
-  outline: 2px solid rgba(243, 156, 18, 0.55);
+  outline: 2px solid rgba(243, 156, 18, 0.45);
   outline-offset: -4px;
-  box-shadow: 0 10px 18px rgba(243, 156, 18, 0.16);
+  box-shadow: 0 8px 16px rgba(243, 156, 18, 0.12);
 }
 
 .cardDesert .arrow {
@@ -104,19 +108,19 @@
 }
 
 .cardDesert.cardActive {
-  box-shadow: 0 16px 30px rgba(243, 156, 18, 0.12);
+  box-shadow: 0 14px 28px rgba(243, 156, 18, 0.1);
 }
 
 .cardLocked .iconWrap {
   border: none;
   outline: none;
+  box-shadow: none;
 }
 
 .icon {
-  font-size: 1.875rem; 
+  font-size: 1.875rem;
   line-height: 1;
 }
-
 
 .lockBadge {
   width: 30px;
@@ -129,17 +133,16 @@
   font-size: 0.875rem;
 }
 
-
 .cardTitle {
-  font-size: 1.125rem; 
-  font-weight: 800;
-  line-height: 1.4;
-  color: #111;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: rgba(0, 0, 0, 0.84);
   margin-bottom: 10px;
 }
 
 .cardLocked .cardTitle {
-  color: rgba(0, 0, 0, 0.55);
+  color: rgba(0, 0, 0, 0.58);
 }
 
 .desc {
@@ -151,12 +154,11 @@
 }
 
 .cardLocked .desc {
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.44);
 }
 
-
 .metaText {
-  font-size: 0.8125rem; 
+  font-size: 0.8125rem;
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.55);
   margin-bottom: 10px;
@@ -164,9 +166,8 @@
 }
 
 .cardLocked .metaText {
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.44);
 }
-
 
 .progressWrap {
   margin-bottom: 16px;
@@ -176,16 +177,15 @@
   width: 100%;
   height: 10px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.07);
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, #6a7cff, #8b5cf6);
 }
-
 
 .bottomRow {
   display: flex;
@@ -195,21 +195,20 @@
 }
 
 .missions {
-  font-size: 0.8125rem; 
+  font-size: 0.8125rem;
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.55);
 }
 
 .cardLocked .missions {
-  color: rgba(0, 0, 0, 0.45);
+  color: rgba(0, 0, 0, 0.44);
 }
 
 .arrow {
-  font-size: 1.375rem; 
+  font-size: 1.375rem;
   color: #5b6cff;
   font-weight: 700;
 }
-
 
 @media (max-width: 1200px) {
   .grid {
@@ -220,9 +219,84 @@
 @media (max-width: 760px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .title {
-    font-size: 2rem; 
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .iconWrap {
+    width: 62px;
+    height: 62px;
+  }
+
+  .icon {
+    font-size: 1.65rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .loading {
+    padding: 28px 20px;
+  }
+
+  .header {
+    margin-bottom: 18px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .topRow {
+    margin-bottom: 12px;
+  }
+
+  .iconWrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+  }
+
+  .icon {
+    font-size: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .desc {
+    font-size: 0.84rem;
+    min-height: auto;
+  }
+
+  .lockBadge {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .arrow {
+    font-size: 1.2rem;
   }
 }

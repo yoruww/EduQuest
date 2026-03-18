@@ -1,7 +1,7 @@
 .loading {
   padding: 40px 24px;
   font-size: 1rem;
-  color: #222;
+  color: rgba(0, 0, 0, 0.78);
 }
 
 .page {
@@ -16,19 +16,20 @@
   padding: 10px 12px;
   font-size: 1rem;
   font-weight: 500;
-  color: #111;
+  color: rgba(0, 0, 0, 0.8);
   border-radius: 12px;
+  transition: background-color 0.18s ease, color 0.18s ease;
 }
 
 .back:hover {
   background: rgba(91, 108, 255, 0.08);
+  color: var(--brand);
 }
 
 .back:focus-visible {
   outline: 3px solid rgba(91, 108, 255, 0.35);
   outline-offset: 3px;
 }
-
 
 .courseCard {
   background: #fff;
@@ -64,36 +65,38 @@
 }
 
 .courseTitle {
-  font-size: 2rem;
-  line-height: 1.1;
-  font-weight: 800;
-  color: #111;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
   margin: 0 0 6px;
 }
 
 .courseDesc {
   margin: 0 0 16px;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.58);
   font-size: 1rem;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .courseProgressRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 8px;
 }
 
 .courseProgressLabel {
   font-size: 0.95rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.58);
 }
 
 .courseProgressValue {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #111;
+  color: rgba(0, 0, 0, 0.82);
+  white-space: nowrap;
 }
 
 .courseProgressBar {
@@ -110,7 +113,6 @@
   background: linear-gradient(135deg, #4f86ff, #6a7cff);
 }
 
-
 .grid {
   display: grid;
   grid-template-columns: 420px 1fr;
@@ -120,9 +122,9 @@
 }
 
 .missionsTitle {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #111;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
   margin: 0 0 14px;
 }
 
@@ -131,7 +133,6 @@
   flex-direction: column;
   gap: 14px;
 }
-
 
 .missionItem {
   width: 100%;
@@ -185,17 +186,18 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
 .missionName {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #111;
+  color: rgba(0, 0, 0, 0.82);
 }
 
 .finalBadge {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(255, 187, 90, 0.35);
@@ -206,6 +208,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .xp {
@@ -254,7 +257,6 @@
   box-shadow: none;
 }
 
-
 .content {
   min-height: 520px;
 }
@@ -275,14 +277,14 @@
 }
 
 .emptyTitle {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #111;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .emptyText {
   font-size: 1rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.58);
   max-width: 520px;
   line-height: 1.5;
 }
@@ -302,10 +304,10 @@
 }
 
 .missionTitle {
-  font-size: 2rem;
-  line-height: 1.1;
-  font-weight: 900;
-  color: #111;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
   margin: 0 0 6px;
 }
 
@@ -327,10 +329,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 800;
-  color: #111;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
   margin-bottom: 10px;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 
 .blockIcon {
@@ -339,7 +341,7 @@
 
 .theoryText {
   margin: 0;
-  color: rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.74);
   font-size: 1rem;
   line-height: 1.6;
   white-space: pre-line;
@@ -351,8 +353,8 @@
 
 .question {
   margin: 10px 0 14px;
-  font-size: 1.05rem;
-  color: #111;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.8);
   line-height: 1.45;
   font-weight: 600;
 }
@@ -394,17 +396,17 @@
   display: grid;
   place-items: center;
   font-size: 0.9rem;
-  font-weight: 800;
-  color: #111;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
   border: 2px solid rgba(0, 0, 0, 0.15);
   background: rgba(0, 0, 0, 0.03);
   flex: 0 0 auto;
 }
 
 .optionText {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #111;
+  color: rgba(0, 0, 0, 0.82);
 }
 
 .optionSelected {
@@ -439,8 +441,8 @@
   width: 100%;
   height: 52px;
   border-radius: 999px;
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.12s ease, filter 0.12s ease;
 }
@@ -469,7 +471,6 @@
   background: linear-gradient(135deg, #2ecc71, #25b05c);
   color: #fff;
 }
-
 
 .modalOverlay {
   position: fixed;
@@ -527,8 +528,8 @@
 
 .modalValue {
   margin-top: 12px;
-  font-size: 2rem;
-  font-weight: 900;
+  font-size: 1.8rem;
+  font-weight: 700;
   color: #ffb300;
 }
 
@@ -550,13 +551,13 @@
   height: 48px;
   border-radius: 999px;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .modalGhost {
   background: rgba(0, 0, 0, 0.06);
-  color: #111;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .modalPrimary {
@@ -576,12 +577,11 @@
   height: 52px;
   border-radius: 999px;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   background: rgba(0, 0, 0, 0.06);
-  color: #111;
+  color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
-
 
 @media (max-width: 1100px) {
   .grid {
@@ -594,5 +594,202 @@
 
   .content {
     order: 2;
+  }
+}
+
+@media (max-width: 760px) {
+  .courseCard {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .courseIcon {
+    width: 82px;
+    height: 82px;
+    border-radius: 16px;
+    font-size: 1.7rem;
+  }
+
+  .courseTitle {
+    font-size: 1.5rem;
+  }
+
+  .courseDesc {
+    font-size: 0.95rem;
+  }
+
+  .missionsTitle {
+    font-size: 1.1rem;
+  }
+
+  .missionItem {
+    grid-template-columns: 60px 1fr 12px;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .missionIconWrap {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+  }
+
+  .missionIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+  }
+
+  .missionName {
+    font-size: 0.95rem;
+  }
+
+  .content {
+    min-height: auto;
+  }
+
+  .empty,
+  .missionCard {
+    padding: 18px;
+  }
+
+  .emptyTitle {
+    font-size: 1.2rem;
+  }
+
+  .missionTitle {
+    font-size: 1.45rem;
+  }
+
+  .theory,
+  .task {
+    margin-top: 14px;
+  }
+
+  .option {
+    padding: 12px 14px;
+  }
+
+  .optionText {
+    font-size: 0.95rem;
+  }
+
+  .modal {
+    padding: 18px;
+  }
+
+  .modalValue {
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .loading {
+    padding: 28px 20px;
+  }
+
+  .back {
+    margin: 6px 0 14px;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .courseCard {
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .courseProgressRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .grid {
+    gap: 18px;
+  }
+
+  .missionItem {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dot {
+    display: none;
+  }
+
+  .missionIconWrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  .missionIcon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .missionMeta {
+    gap: 8px;
+  }
+
+  .empty {
+    padding: 28px 16px;
+  }
+
+  .emptyIcon {
+    font-size: 2.4rem;
+  }
+
+  .missionCard {
+    padding: 16px;
+  }
+
+  .missionHeader {
+    gap: 12px;
+  }
+
+  .missionTitle {
+    font-size: 1.3rem;
+  }
+
+  .blockTitle {
+    font-size: 0.96rem;
+  }
+
+  .theoryText,
+  .question {
+    font-size: 0.95rem;
+  }
+
+  .option {
+    gap: 10px;
+  }
+
+  .badge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.82rem;
+  }
+
+  .checkBtn,
+  .finishBtn,
+  .tryAgainBtn {
+    height: 48px;
+    font-size: 0.95rem;
+  }
+
+  .modalIcon {
+    width: 78px;
+    height: 78px;
+    font-size: 1.9rem;
+  }
+
+  .modalBtns,
+  .afterWrong {
+    grid-template-columns: 1fr;
   }
 }

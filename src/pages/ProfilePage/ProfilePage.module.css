@@ -1,0 +1,534 @@
+.page {
+  width: 100%;
+}
+
+.loading {
+  padding: 40px 60px;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.heroCard {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.heroLeft {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-width: 0;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #6a7cff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #fff;
+}
+
+.levelBadge {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  min-width: 64px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #6a63ff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(106, 99, 255, 0.25);
+}
+
+.heroInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.userName {
+  font-size: 1.85rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
+  margin-bottom: 8px;
+}
+
+.userMeta {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.55);
+  margin-bottom: 18px;
+}
+
+.progressBlock {
+  max-width: 520px;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 16px;
+}
+
+.progressLabel {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.progressValue {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
+  white-space: nowrap;
+}
+
+.progressBar {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5b8bff, #6a63ff);
+}
+
+.heroRight {
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.totalXpBadge {
+  min-width: 76px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(238, 187, 61, 0.55);
+  background: #fff8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
+  margin: 0 auto 8px;
+}
+
+.totalXpText {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+}
+
+.statTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.statIconCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+}
+
+.toneBlue {
+  background: rgba(92, 125, 247, 0.12);
+}
+
+.toneViolet {
+  background: rgba(154, 123, 255, 0.12);
+}
+
+.toneGold {
+  background: rgba(238, 187, 61, 0.12);
+}
+
+.toneGreen {
+  background: rgba(104, 183, 111, 0.14);
+}
+
+.statIcon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.iconBlue {
+  color: #4d86ff;
+}
+
+.iconViolet {
+  color: #705dff;
+}
+
+.iconGold {
+  color: #f2aa00;
+}
+
+.iconGreen {
+  color: #45a44e;
+}
+
+.statLabel {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.58);
+  margin-bottom: 12px;
+}
+
+.statValue {
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
+}
+
+.achievementsCard {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px 32px 32px;
+}
+
+.achievementsHeader {
+  margin-bottom: 22px;
+}
+
+.achievementsTitle {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.achievementItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.achievementIconBox {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 2rem;
+}
+
+.emojiIcon {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.achievementName {
+  font-size: 0.875rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.achievementLocked .achievementIconBox {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.achievementLocked .emojiIcon {
+  filter: grayscale(100%) opacity(0.45);
+}
+
+.achievementLocked .achievementName {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.achievementUnlocked .achievementIconBox {
+  background: linear-gradient(
+    135deg,
+    rgba(106, 124, 255, 0.18),
+    rgba(139, 92, 246, 0.14)
+  );
+  box-shadow: 0 10px 18px rgba(91, 108, 255, 0.18);
+}
+
+.achievementUnlocked .emojiIcon {
+  filter: none;
+  transform: scale(1.08);
+}
+
+.achievementUnlocked .achievementName {
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.emptyAchievements {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.emptyAchievementsIcon {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 14px;
+  opacity: 0.55;
+}
+
+.emptyAchievementsText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1200px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .achievementsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .heroCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heroRight {
+    text-align: left;
+  }
+
+  .totalXpBadge {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .heroCard {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .heroLeft {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 2.5rem;
+  }
+
+  .userName {
+    font-size: 1.6rem;
+  }
+
+  .userMeta {
+    font-size: 0.95rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .achievementsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .achievementsCard {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .achievementsTitle {
+    font-size: 1.4rem;
+  }
+
+  .statCard {
+    min-height: auto;
+  }
+
+  .statValue {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .loading {
+    padding: 28px 20px;
+  }
+
+  .heroCard {
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .heroLeft {
+    gap: 18px;
+  }
+
+  .avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 20px;
+    font-size: 2.2rem;
+  }
+
+  .levelBadge {
+    min-width: 56px;
+    height: 34px;
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+
+  .userName {
+    font-size: 1.4rem;
+  }
+
+  .userMeta {
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+
+  .progressRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .progressBar {
+    height: 12px;
+  }
+
+  .totalXpBadge {
+    min-width: 68px;
+    height: 42px;
+    font-size: 1.05rem;
+    padding: 0 14px;
+  }
+
+  .statsGrid {
+    gap: 18px;
+  }
+
+  .statCard {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .statTop {
+    margin-bottom: 18px;
+  }
+
+  .statIconCircle {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+  }
+
+  .statIcon {
+    font-size: 1.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.95rem;
+  }
+
+  .statValue {
+    font-size: 1.6rem;
+  }
+
+  .achievementsCard {
+    padding: 18px;
+  }
+
+  .achievementsHeader {
+    margin-bottom: 18px;
+  }
+
+  .achievementsTitle {
+    font-size: 1.25rem;
+  }
+
+  .achievementIconBox {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    font-size: 1.7rem;
+    margin-bottom: 12px;
+  }
+
+  .achievementName {
+    font-size: 0.82rem;
+  }
+
+  .emptyAchievements {
+    margin-top: 28px;
+  }
+
+  .emptyAchievementsIcon {
+    font-size: 3rem;
+  }
+
+  .emptyAchievementsText {
+    font-size: 0.92rem;
+  }
+}

@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { useEduQuest } from "../../hooks/useEduQuest";
 import { NAV_ITEMS } from "./constants";
+import { APP_ROUTES } from "../../constants/routes";
 
 const Layout = () => {
   const { data } = useEduQuest();
@@ -10,7 +11,11 @@ const Layout = () => {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <Link to="/home" className={styles.logoBlock} aria-label="На главную">
+          <Link
+            to={APP_ROUTES.home}
+            className={styles.logoBlock}
+            aria-label="На главную"
+          >
             <div className={styles.logoIcon}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +50,7 @@ const Layout = () => {
           <div className={styles.rightBlock}>
             {data && (
               <>
-                <div className={styles.stars}>⭐ {data.user.stars}</div>
+                <div className={styles.xpBadge}>⭐ {data.user.xp}</div>
 
                 <div className={styles.userInfo}>
                   <div className={styles.avatar}>👑</div>

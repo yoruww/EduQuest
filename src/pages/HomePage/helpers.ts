@@ -1,10 +1,44 @@
-import type { Course } from "../../types/types";
+import type { Course } from "../../types/eduquest";
 import type {
   AchievementView,
   BuildAchievementsParams,
   BuildMapNodesParams,
   MapNode,
 } from "./types";
+
+const BASE_XP_PER_LEVEL = 100;
+
+export const getXpRequiredForLevel = (level: number): number => {
+  if (level <= 1) {
+    return 0;
+  }
+
+  let totalXp = 0;
+
+  for (let currentLevel = 1; currentLevel < level; currentLevel += 1) {
+    totalXp += currentLevel * BASE_XP_PER_LEVEL;
+  }
+
+  return totalXp;
+};
+
+export const getUserLevel = (xp: number): number => {
+  let level = 1;
+
+  while (xp >= getXpRequiredForLevel(level + 1)) {
+    level += 1;
+  }
+
+  return level;
+};
+
+export const getCurrentLevelStartXp = (level: number): number => {
+  return getXpRequiredForLevel(level);
+};
+
+export const getNextLevelXp = (level: number): number => {
+  return getXpRequiredForLevel(level + 1);
+};
 
 export const getCourseIcon = (courseId: string): string => {
   switch (courseId) {
@@ -22,7 +56,9 @@ export const getNodeThemeClass = (
   locked: boolean,
   styles: Record<string, string>
 ): string => {
-  if (locked) return "";
+  if (locked) {
+    return "";
+  }
 
   switch (nodeId) {
     case "forest-basics":
@@ -39,7 +75,7 @@ export const buildMapNodes = ({
   upcomingNodes,
   onOpenCourse,
 }: BuildMapNodesParams): MapNode[] => {
-  const realNodes = courses.map((course: Course) => ({
+  const realNodes = courses.map((course) => ({
     id: course.id,
     title: course.title,
     subtitle: `${course.missions.length} миссий`,

@@ -1,18 +1,26 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { buildCourseRoute } from "../../constants/routes";
 import { useEduQuest } from "../../hooks/useEduQuest";
 import { ACHIEVEMENT_ICONS, UPCOMING_MAP_NODES } from "./constants";
 import {
   buildLastAchievements,
   buildMapNodes,
   getCompletedMissionsCount,
+  getCurrentLevelStartXp,
+  getNextLevelXp,
   getNodeThemeClass,
   getTotalMissionsCount,
+  getUserLevel,
 } from "./helpers";
 import type { AchievementView, MapNode } from "./types";
 import styles from "./HomePage.module.css";
 
-const AchievementIcon = ({ id }: { id: string }) => {
+interface AchievementIconProps {
+  id: string;
+}
+
+const AchievementIcon = ({ id }: AchievementIconProps) => {
   const icon = ACHIEVEMENT_ICONS[id] ?? "⭐";
   return <span className={styles.emojiIcon}>{icon}</span>;
 };
@@ -21,37 +29,36 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { data } = useEduQuest();
 
-  const level = useMemo(() => {
-    const xp = data?.user.xp ?? 0;
-    return Math.floor(xp / 100) + 1;
-  }, [data?.user.xp]);
+  const xp = data?.user.xp ?? 0;
 
-  const xpToNextLevel = 300;
-  const xpProgress = data?.user.xp ?? 0;
-  const xpPercent = Math.min(
-    100,
-    Math.round((xpProgress / xpToNextLevel) * 100)
-  );
+  const level = useMemo(() => {
+    return getUserLevel(xp);
+  }, [xp]);
+
+  const currentLevelStartXp = getCurrentLevelStartXp(level);
+  const nextLevelXp = getNextLevelXp(level);
+  const currentLevelRange = nextLevelXp - currentLevelStartXp;
+  const currentLevelProgress = xp - currentLevelStartXp;
+
+  const xpPercent =
+    currentLevelRange > 0
+      ? Math.min(100, Math.round((currentLevelProgress / currentLevelRange) * 100))
+      : 0;
 
   const nodes = useMemo<MapNode[]>(() => {
-    if (!data) return [];
+    if (!data) {
+      return [];
+    }
 
     return buildMapNodes({
       courses: data.courses,
       upcomingNodes: UPCOMING_MAP_NODES,
-      onOpenCourse: (courseId) => navigate(`/course/${courseId}`),
+      onOpenCourse: (courseId) => navigate(buildCourseRoute(courseId)),
     });
   }, [data, navigate]);
 
-  const totalMissions = useMemo(() => {
-    if (!data) return 0;
-    return getTotalMissionsCount(data.courses);
-  }, [data]);
-
-  const completedMissions = useMemo(() => {
-    if (!data) return 0;
-    return getCompletedMissionsCount(data.courses);
-  }, [data]);
+  const totalMissions = data ? getTotalMissionsCount(data.courses) : 0;
+  const completedMissions = data ? getCompletedMissionsCount(data.courses) : 0;
 
   const worldProgressPercent =
     totalMissions > 0
@@ -59,7 +66,9 @@ const HomePage = () => {
       : 0;
 
   const lastAchievements = useMemo<AchievementView[]>(() => {
-    if (!data) return [];
+    if (!data) {
+      return [];
+    }
 
     return buildLastAchievements({
       achievements: data.achievements,
@@ -129,7 +138,7 @@ const HomePage = () => {
           <div className={styles.progressRow}>
             <span className={styles.muted}>До следующего уровня</span>
             <span className={styles.progressValue}>
-              {Math.min(xpProgress, xpToNextLevel)}/{xpToNextLevel}
+              {xp}/{nextLevelXp}
             </span>
           </div>
 

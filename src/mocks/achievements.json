@@ -15,7 +15,7 @@
     "id": "100xp",
     "title": "100 XP",
     "description": "Наберите 100 XP",
-    "condition": "earn-100-XP"
+    "condition": "earn-100-xp"
   },
   {
     "id": "all-courses",

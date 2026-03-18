@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEduQuest } from "../../hooks/useEduQuest";
+import { buildCourseRoute } from "../../constants/routes";
 import { SOON_COURSES } from "./constants";
 import { buildCourseCards, getCardThemeClass } from "./helpers";
 import type { CourseCardView } from "./types";
@@ -11,7 +12,9 @@ const CoursesPage = () => {
   const { data } = useEduQuest();
 
   const cards = useMemo((): CourseCardView[] => {
-    if (!data) return [];
+    if (!data) {
+      return [];
+    }
 
     return buildCourseCards({
       courses: data.courses,
@@ -19,9 +22,12 @@ const CoursesPage = () => {
     });
   }, [data]);
 
-  const openCourse = (card: CourseCardView) => {
-    if (card.locked || card.soon) return;
-    navigate(`/course/${card.id}`);
+  const handleOpenCourse = (card: CourseCardView) => {
+    if (card.locked || card.soon) {
+      return;
+    }
+
+    navigate(buildCourseRoute(card.id));
   };
 
   if (!data) {
@@ -46,6 +52,12 @@ const CoursesPage = () => {
               ? Math.round((card.completedMissions / card.missionsCount) * 100)
               : 0;
 
+          const buttonTitle = card.soon
+            ? "Скоро открытие"
+            : card.locked
+            ? "Курс закрыт"
+            : "Открыть курс";
+
           return (
             <button
               key={card.id}
@@ -57,15 +69,9 @@ const CoursesPage = () => {
               ]
                 .filter(Boolean)
                 .join(" ")}
-              onClick={() => openCourse(card)}
+              onClick={() => handleOpenCourse(card)}
               disabled={card.locked || card.soon}
-              title={
-                card.soon
-                  ? "Скоро открытие"
-                  : card.locked
-                  ? "Курс закрыт"
-                  : "Открыть курс"
-              }
+              title={buttonTitle}
             >
               <div className={styles.topRow}>
                 <div className={styles.iconWrap}>

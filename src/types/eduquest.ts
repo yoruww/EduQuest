@@ -1,7 +1,7 @@
 export type AchievementCondition =
   | "complete-1-mission"
-  | "complete-full-cource"
-  | "earn-100-XP"
+  | "complete-full-course"
+  | "earn-100-xp"
   | "complete-all";
 
 export interface Achievement {
@@ -33,7 +33,6 @@ export interface Course {
 export interface User {
   name: string;
   xp: number;
-  stars: number;
   achievements: string[];
 }
 

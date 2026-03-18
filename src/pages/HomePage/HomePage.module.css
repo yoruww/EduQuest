@@ -282,6 +282,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 10px;
 }
 
@@ -296,6 +297,7 @@
   font-weight: 600;
   color: var(--text);
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .progressBar {
@@ -406,5 +408,236 @@
 
   .mapArea {
     height: 480px;
+  }
+
+  .sidebar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 900px) {
+  .mapCard {
+    padding: 18px 18px 16px;
+  }
+
+  .mapTitle {
+    font-size: 1.5rem;
+  }
+
+  .mapArea {
+    height: 430px;
+  }
+
+  .node {
+    width: 150px;
+  }
+
+  .circle {
+    width: 82px;
+    height: 82px;
+  }
+
+  .circleInner {
+    width: 70px;
+    height: 70px;
+  }
+
+  .nodeIcon {
+    font-size: 1.5rem;
+  }
+
+  .nodeTitle {
+    font-size: 0.8rem;
+  }
+
+  .nodeSub {
+    font-size: 0.72rem;
+  }
+
+  .cloud1 {
+    left: 40px;
+    top: 70px;
+  }
+
+  .cloud2 {
+    right: 40px;
+    top: 90px;
+    width: 150px;
+  }
+
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .sideCard {
+    padding: 16px;
+  }
+
+  .achievementsGrid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    gap: 20px;
+  }
+
+  .mapCard {
+    padding: 16px 16px 14px;
+    border-radius: 16px;
+  }
+
+  .mapHeader {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .mapTitle {
+    font-size: 1.35rem;
+  }
+
+  .mapArea {
+    height: 380px;
+    border-radius: 12px;
+  }
+
+  .node {
+    width: 120px;
+    gap: 4px;
+  }
+
+  .circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .circleInner {
+    width: 60px;
+    height: 60px;
+  }
+
+  .nodeIcon {
+    font-size: 1.25rem;
+  }
+
+  .lock {
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+    top: -6px;
+    right: -4px;
+  }
+
+  .nodeTitle {
+    font-size: 0.74rem;
+  }
+
+  .nodeSub {
+    font-size: 0.68rem;
+  }
+
+  .bigAvatar {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .bigPercent {
+    font-size: 1.4rem;
+  }
+
+  .achievementsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .achIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+
+  .achText {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .loading {
+    padding: 28px 20px;
+  }
+
+  .mapTitle {
+    font-size: 1.2rem;
+  }
+
+  .mapArea {
+    height: 340px;
+  }
+
+  .node {
+    width: 96px;
+  }
+
+  .circle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .circleInner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .nodeIcon {
+    font-size: 1.05rem;
+  }
+
+  .nodeTitle {
+    font-size: 0.68rem;
+  }
+
+  .nodeSub {
+    font-size: 0.62rem;
+  }
+
+  .cloud1,
+  .cloud2 {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+
+  .progressRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cardTitle {
+    font-size: 0.95rem;
+  }
+
+  .achievementsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .achItem {
+    gap: 8px;
+    padding: 6px 4px;
+  }
+
+  .achIcon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 1.2rem;
+  }
+
+  .bigPercent {
+    font-size: 1.25rem;
   }
 }

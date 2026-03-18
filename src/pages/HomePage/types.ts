@@ -1,34 +1,34 @@
-import type { Achievement, Course } from "../../types/types";
+import type { Achievement, Course } from "../../types/eduquest";
 
-export type MapNode = {
+export interface MapNode {
   id: string;
   title: string;
   subtitle: string;
   icon: string;
   locked: boolean;
   onClick?: () => void;
-};
+}
 
-export type UpcomingMapNode = {
+export interface UpcomingMapNode {
   id: string;
   title: string;
   subtitle: string;
   icon: string;
-};
+}
 
-export type AchievementView = {
+export interface AchievementView {
   id: string;
   title: string;
   unlocked: boolean;
-};
+}
 
-export type BuildMapNodesParams = {
+export interface BuildMapNodesParams {
   courses: Course[];
   upcomingNodes: UpcomingMapNode[];
   onOpenCourse: (courseId: string) => void;
-};
+}
 
-export type BuildAchievementsParams = {
+export interface BuildAchievementsParams {
   achievements: Achievement[];
   unlockedAchievementIds: string[];
-};
+}
