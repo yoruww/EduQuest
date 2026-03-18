@@ -57,6 +57,22 @@ export const useEduQuest = () => {
     saveStorage(newData);
   };
 
+  const setUserName = (name: string) => {
+    if (!data) {
+      return;
+    }
+
+    const updatedData: EduQuestData = {
+      ...data,
+      user: {
+        ...data.user,
+        name,
+      },
+    };
+
+    updateData(updatedData);
+  };
+
   const completeMission = (
     courseId: string,
     missionId: string,
@@ -99,6 +115,7 @@ export const useEduQuest = () => {
 
   return {
     data,
+    setUserName,
     completeMission,
   };
 };

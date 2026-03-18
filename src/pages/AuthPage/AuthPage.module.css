@@ -1,0 +1,240 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #cfd6ff 0%, #f3e5d8 100%);
+}
+
+.card {
+  width: min(100%, 540px);
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+  padding: 34px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logoWrap {
+  margin-bottom: 16px;
+}
+
+.logoIcon {
+  width: 96px;
+  height: 96px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #5b8bff, #6a63ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(91, 108, 255, 0.22);
+
+  animation: logoRotate 8s linear infinite;
+}
+
+@keyframes logoRotate {
+  0% {
+    transform: rotate(-6deg);
+  }
+  100% {
+    transform: rotate(354deg);
+  }
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #5b6cff;
+}
+
+.subtitle {
+  margin: 0 0 28px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.52);
+}
+
+.infoBox {
+  width: 100%;
+  margin-bottom: 26px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(207, 214, 255, 0.72),
+    rgba(232, 224, 255, 0.68)
+  );
+  border: 1px solid rgba(91, 108, 255, 0.14);
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  text-align: left;
+}
+
+.infoIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.infoText {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.label {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.82);
+}
+
+.input {
+  width: 100%;
+  height: 58px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 2px solid transparent;
+  padding: 0 16px;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.82);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(91, 108, 255, 0.45);
+  box-shadow: 0 0 0 4px rgba(91, 108, 255, 0.12);
+  background: #ffffff;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 58px;
+  margin-top: 6px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #4f86ff, #6a63ff);
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 14px 26px rgba(91, 108, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+.submitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.submitBtn:focus-visible {
+  outline: 3px solid rgba(91, 108, 255, 0.28);
+  outline-offset: 4px;
+}
+
+.note {
+  max-width: 380px;
+  margin: 24px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: 18px;
+  }
+
+  .card {
+    padding: 28px 22px 30px;
+    border-radius: 24px;
+  }
+
+  .logoIcon {
+    width: 84px;
+    height: 84px;
+    border-radius: 22px;
+    font-size: 2.4rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    margin-bottom: 22px;
+  }
+
+  .infoBox {
+    padding: 16px 16px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 24px 18px 26px;
+    border-radius: 22px;
+  }
+
+  .logoIcon {
+    width: 76px;
+    height: 76px;
+    border-radius: 20px;
+    font-size: 2.2rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .infoText {
+    font-size: 0.94rem;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .input,
+  .submitBtn {
+    height: 54px;
+  }
+
+  .submitBtn {
+    font-size: 1.05rem;
+  }
+
+  .note {
+    font-size: 0.88rem;
+  }
+}

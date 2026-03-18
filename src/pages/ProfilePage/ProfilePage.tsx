@@ -78,7 +78,9 @@ const ProfilePage = () => {
         <div className={styles.heroLeft}>
           <div className={styles.avatarWrap}>
             <div className={styles.avatar}>👑</div>
-            <div className={styles.levelBadge}>🏆 {level}</div>
+            <div className={styles.levelBadge}>
+              🏆 {data.user.achievements.length}
+            </div>
           </div>
 
           <div className={styles.heroInfo}>
