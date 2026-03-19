@@ -18,6 +18,10 @@ import {
   getProgressPercent,
 } from "./helpers";
 import type { AnswerState, MissionWithUi } from "./types";
+import CourseHeader from "./components/CourseHeader";
+import MissionSidebar from "./components/MissionSidebar";
+import MissionContent from "./components/MissionContent";
+import RewardModal from "./components/RewardModal";
 import styles from "./CoursePage.module.css";
 
 const CoursePage = () => {
@@ -192,230 +196,44 @@ const CoursePage = () => {
         ← Назад к курсам
       </button>
 
-      <section className={[styles.courseCard, courseThemeClass].join(" ")}>
-        <div className={styles.courseIcon}>{courseIcon}</div>
-
-        <div className={styles.courseInfo}>
-          <h1 className={styles.courseTitle}>{course.title}</h1>
-          <p className={styles.courseDesc}>{course.description}</p>
-
-          <div className={styles.courseProgressRow}>
-            <span className={styles.courseProgressLabel}>Прогресс курса</span>
-            <span className={styles.courseProgressValue}>
-              {completedCount}/{totalCount || 1}
-            </span>
-          </div>
-
-          <div className={styles.courseProgressBar}>
-            <div
-              className={styles.courseProgressFill}
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-        </div>
-      </section>
+      <CourseHeader
+        course={course}
+        courseIcon={courseIcon}
+        courseThemeClass={courseThemeClass}
+        completedCount={completedCount}
+        totalCount={totalCount}
+        progressPercent={progressPercent}
+      />
 
       <section className={styles.grid}>
-        <aside className={styles.missions}>
-          <h2 className={styles.missionsTitle}>Миссии курса</h2>
+        <MissionSidebar
+          missions={missions}
+          activeMissionId={activeMissionId}
+          onOpenMission={openMission}
+        />
 
-          <div className={styles.missionList}>
-            {missions.map((mission) => {
-              const isActive = mission.id === activeMissionId;
-              const isLocked = mission.locked;
-              const isDone = mission.completed;
-
-              return (
-                <button
-                  key={mission.id}
-                  type="button"
-                  className={[
-                    styles.missionItem,
-                    isActive ? styles.missionActive : "",
-                    isLocked ? styles.missionLocked : "",
-                    isDone ? styles.missionDone : "",
-                  ].join(" ")}
-                  onClick={() => openMission(mission.id)}
-                  aria-disabled={isLocked ? "true" : "false"}
-                >
-                  <div className={styles.missionIconWrap}>
-                    <div className={styles.missionIcon}>
-                      {isLocked ? "🔒" : mission.icon}
-                    </div>
-                  </div>
-
-                  <div className={styles.missionText}>
-                    <div className={styles.missionNameRow}>
-                      <div className={styles.missionName}>
-                        {mission.displayTitle}
-                      </div>
-                      {mission.isFinal ? (
-                        <span className={styles.finalBadge}>Финал</span>
-                      ) : null}
-                    </div>
-
-                    <div className={styles.missionMeta}>
-                      <span className={styles.xp}>⭐ +{mission.xp} XP</span>
-                      {isDone ? (
-                        <span className={styles.done}>Завершено</span>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  {isActive ? <span className={styles.dot} /> : null}
-                </button>
-              );
-            })}
-          </div>
-        </aside>
-
-        <div className={styles.content}>
-          {!activeMission || activeMission.locked || !activeContent ? (
-            <div className={styles.empty}>
-              <div className={styles.emptyIcon}>{courseIcon}</div>
-              <div className={styles.emptyTitle}>Выберите миссию</div>
-              <div className={styles.emptyText}>
-                Выберите миссию из списка слева, чтобы начать обучение
-              </div>
-            </div>
-          ) : (
-            <div className={styles.missionCard}>
-              <div className={styles.missionHeader}>
-                <div>
-                  <h3 className={styles.missionTitle}>{activeContent.title}</h3>
-                  <div className={styles.missionXp}>
-                    ⭐ +{activeMission.xp} XP
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.theory}>
-                <div className={styles.blockTitle}>
-                  <span className={styles.blockIcon}>📚</span>
-                  <span>Теория</span>
-                </div>
-                <p className={styles.theoryText}>{activeContent.theory}</p>
-              </div>
-
-              <div className={styles.task}>
-                <div className={styles.blockTitle}>
-                  <span className={styles.blockIcon}>❓</span>
-                  <span>Задание</span>
-                </div>
-
-                <p className={styles.question}>{activeContent.question}</p>
-
-                <div className={styles.options}>
-                  {activeContent.options.map((option, idx) => {
-                    const isSelected = selectedOptionId === option.id;
-
-                    const isWrongSelected =
-                      answerState === "checked_wrong" && isSelected;
-
-                    const isCorrectVisible =
-                      option.id === activeContent.correctOptionId &&
-                      (answerState === "checked_correct" ||
-                        answerState === "checked_wrong");
-
-                    return (
-                      <button
-                        key={option.id}
-                        type="button"
-                        className={[
-                          styles.option,
-                          isSelected && answerState === "selected"
-                            ? styles.optionSelected
-                            : "",
-                          isWrongSelected ? styles.optionWrong : "",
-                          isCorrectVisible ? styles.optionCorrect : "",
-                        ].join(" ")}
-                        onClick={() => handleSelect(option.id)}
-                      >
-                        <span className={styles.badge}>
-                          {String.fromCharCode(65 + idx)}
-                        </span>
-                        <span className={styles.optionText}>{option.text}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className={styles.actions}>
-                  {(answerState === "idle" || answerState === "selected") && (
-                    <button
-                      type="button"
-                      className={styles.checkBtn}
-                      onClick={checkAnswer}
-                      disabled={!selectedOptionId}
-                    >
-                      Проверить ответ
-                    </button>
-                  )}
-
-                  {(answerState === "checked_correct" ||
-                    answerState === "checked_wrong") && (
-                    <button
-                      type="button"
-                      className={styles.finishBtn}
-                      onClick={finishMission}
-                    >
-                      Завершить миссию
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        <MissionContent
+          courseIcon={courseIcon}
+          activeMission={activeMission}
+          activeContent={activeContent}
+          selectedOptionId={selectedOptionId}
+          answerState={answerState}
+          onSelect={handleSelect}
+          onCheckAnswer={checkAnswer}
+          onFinishMission={finishMission}
+        />
       </section>
 
-      {showReward && (
-        <div className={styles.modalOverlay} role="dialog" aria-modal="true">
-          <div className={styles.modal}>
-            <button
-              type="button"
-              className={styles.modalClose}
-              onClick={() => setShowReward(false)}
-              aria-label="Закрыть"
-            >
-              ×
-            </button>
-
-            <div className={styles.modalIconWrap}>
-              <div className={styles.modalIcon}>⭐</div>
-            </div>
-
-            <div className={styles.modalValue}>+{rewardXp} XP</div>
-
-            <div className={styles.modalText}>
-              {rewardXp > 0 ? "Опыт успешно начислен" : "Опыт не начислен"}
-            </div>
-
-            <div className={styles.modalBtns}>
-              <button
-                type="button"
-                className={styles.modalGhost}
-                onClick={() => setShowReward(false)}
-              >
-                Закрыть
-              </button>
-
-              <button
-                type="button"
-                className={styles.modalPrimary}
-                onClick={() => {
-                  setShowReward(false);
-                  goNext();
-                }}
-              >
-                {activeMission?.isFinal
-                  ? "Следующий шаг"
-                  : "Следующая миссия"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <RewardModal
+        isOpen={showReward}
+        rewardXp={rewardXp}
+        isFinalMission={Boolean(activeMission?.isFinal)}
+        onClose={() => setShowReward(false)}
+        onNext={() => {
+          setShowReward(false);
+          goNext();
+        }}
+      />
     </div>
   );
 };
