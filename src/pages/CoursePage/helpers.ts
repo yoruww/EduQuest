@@ -1,26 +1,18 @@
 import { buildCourseRoute } from "../../constants/routes";
+import { getCourseTheme } from "../../utils/courseMeta";
 import type { Course } from "../../types/eduquest";
 import type { MissionContent, MissionWithUi } from "./types";
-
-export const getCourseIcon = (courseId: string): string => {
-  switch (courseId) {
-    case "forest-basics":
-      return "🌳";
-    case "js-desert":
-      return "🏜️";
-    default:
-      return "📘";
-  }
-};
 
 export const getCourseThemeClass = (
   courseId: string,
   styles: Record<string, string>
 ): string => {
-  switch (courseId) {
-    case "forest-basics":
+  const theme = getCourseTheme(courseId);
+
+  switch (theme) {
+    case "forest":
       return styles.courseForest;
-    case "js-desert":
+    case "desert":
       return styles.courseDesert;
     default:
       return "";

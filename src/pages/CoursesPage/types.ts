@@ -1,4 +1,4 @@
-import type { Course } from "../../types/types";
+import type { Course } from "../../types/eduquest";
 
 export type CourseCardView = {
   id: string;

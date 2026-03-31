@@ -1,55 +1,10 @@
-import type { Course } from "../../types/eduquest";
+import { getCourseIcon, getCourseTheme } from "../../utils/courseMeta";
 import type {
   AchievementView,
   BuildAchievementsParams,
   BuildMapNodesParams,
   MapNode,
 } from "./types";
-
-const BASE_XP_PER_LEVEL = 100;
-
-export const getXpRequiredForLevel = (level: number): number => {
-  if (level <= 1) {
-    return 0;
-  }
-
-  let totalXp = 0;
-
-  for (let currentLevel = 1; currentLevel < level; currentLevel += 1) {
-    totalXp += currentLevel * BASE_XP_PER_LEVEL;
-  }
-
-  return totalXp;
-};
-
-export const getUserLevel = (xp: number): number => {
-  let level = 1;
-
-  while (xp >= getXpRequiredForLevel(level + 1)) {
-    level += 1;
-  }
-
-  return level;
-};
-
-export const getCurrentLevelStartXp = (level: number): number => {
-  return getXpRequiredForLevel(level);
-};
-
-export const getNextLevelXp = (level: number): number => {
-  return getXpRequiredForLevel(level + 1);
-};
-
-export const getCourseIcon = (courseId: string): string => {
-  switch (courseId) {
-    case "forest-basics":
-      return "🌳";
-    case "js-desert":
-      return "🏜️";
-    default:
-      return "📘";
-  }
-};
 
 export const getNodeThemeClass = (
   nodeId: string,
@@ -60,10 +15,12 @@ export const getNodeThemeClass = (
     return "";
   }
 
-  switch (nodeId) {
-    case "forest-basics":
+  const theme = getCourseTheme(nodeId);
+
+  switch (theme) {
+    case "forest":
       return styles.nodeForest;
-    case "js-desert":
+    case "desert":
       return styles.nodeDesert;
     default:
       return "";
@@ -107,16 +64,4 @@ export const buildLastAchievements = ({
     title: achievement.title,
     unlocked: unlockedSet.has(achievement.id),
   }));
-};
-
-export const getCompletedMissionsCount = (courses: Course[]): number => {
-  return courses.reduce(
-    (sum, course) =>
-      sum + course.missions.filter((mission) => mission.completed).length,
-    0
-  );
-};
-
-export const getTotalMissionsCount = (courses: Course[]): number => {
-  return courses.reduce((sum, course) => sum + course.missions.length, 0);
 };

@@ -3,15 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { buildCourseRoute } from "../../constants/routes";
 import { useEduQuest } from "../../hooks/useEduQuest";
 import { UPCOMING_MAP_NODES } from "./constants";
+import { buildLastAchievements, buildMapNodes } from "./helpers";
 import {
-  buildLastAchievements,
-  buildMapNodes,
   getCompletedMissionsCount,
   getCurrentLevelStartXp,
   getNextLevelXp,
   getTotalMissionsCount,
   getUserLevel,
-} from "./helpers";
+} from "../../utils/progress";
 import type { AchievementView, MapNode } from "./types";
 import MapSection from "./components/MapSection";
 import ProfileCard from "./components/ProfileCard";

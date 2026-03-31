@@ -1,13 +1,17 @@
-import { ACHIEVEMENT_ICONS } from "../constants";
-import styles from "../HomePage.module.css";
+import {
+  ACHIEVEMENT_ICONS,
+  DEFAULT_ACHIEVEMENT_ICON,
+} from "../../../constants/achievements";
 
 interface AchievementIconProps {
   id: string;
+  className?: string;
 }
 
-const AchievementIcon = ({ id }: AchievementIconProps) => {
-  const icon = ACHIEVEMENT_ICONS[id] ?? "⭐";
-  return <span className={styles.emojiIcon}>{icon}</span>;
+const AchievementIcon = ({ id, className }: AchievementIconProps) => {
+  const icon = ACHIEVEMENT_ICONS[id] ?? DEFAULT_ACHIEVEMENT_ICON;
+
+  return <span className={className}>{icon}</span>;
 };
 
 export default AchievementIcon;

@@ -34,17 +34,6 @@ export const initStorage = (): EduQuestData => {
   }
 };
 
-export const getStorage = (): EduQuestData | null => {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return null;
-
-  try {
-    return JSON.parse(raw) as EduQuestData;
-  } catch {
-    return null;
-  }
-};
-
 export const saveStorage = (data: EduQuestData) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 };

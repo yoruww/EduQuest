@@ -1,4 +1,5 @@
 import type { Course } from "../../types/eduquest";
+import { getCourseIcon, getCourseTheme } from "../../utils/courseMeta";
 import { DEFAULT_SOON_COURSE_MISSIONS_COUNT } from "./constants";
 import type {
   BuildCourseCardsParams,
@@ -6,23 +7,14 @@ import type {
   SoonCourseConfig,
 } from "./types";
 
-export const getCourseIcon = (courseId: string): string => {
-  switch (courseId) {
-    case "forest-basics":
-      return "🌳";
-    case "js-desert":
-      return "🏜️";
-    default:
-      return "📘";
-  }
-};
-
 export const getCardThemeClass = (
   courseId: string,
   styles: Record<string, string>
 ): string => {
-  switch (courseId) {
-    case "js-desert":
+  const theme = getCourseTheme(courseId);
+
+  switch (theme) {
+    case "desert":
       return styles.cardDesert;
     default:
       return "";

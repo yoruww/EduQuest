@@ -20,10 +20,3 @@ export const UPCOMING_MAP_NODES: UpcomingMapNode[] = [
     icon: "🌊",
   },
 ];
-
-export const ACHIEVEMENT_ICONS: Record<string, string> = {
-  "first-mission": "🥇",
-  "course-conqueror": "🏆",
-  "100xp": "🎯",
-  "all-courses": "📚",
-};

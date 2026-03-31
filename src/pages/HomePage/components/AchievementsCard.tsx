@@ -23,7 +23,10 @@ const AchievementsCard = ({ achievements }: AchievementsCardProps) => {
             title={achievement.unlocked ? "Получено" : "Пока не получено"}
           >
             <div className={styles.achIcon}>
-              <AchievementIcon id={achievement.id} />
+              <AchievementIcon
+                id={achievement.id}
+                className={styles.emojiIcon}
+              />
             </div>
             <div className={styles.achText}>{achievement.title}</div>
           </div>

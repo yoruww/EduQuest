@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { APP_ROUTES } from "../../constants/routes";
 import { useEduQuest } from "../../hooks/useEduQuest";
+import { getCourseIcon } from "../../utils/courseMeta";
 import { COURSE_CONTENT } from "./courseContent";
 import { DEFAULT_COURSE_ID } from "./constants";
 import {
@@ -10,14 +11,12 @@ import {
   getActiveMissionContent,
   getCompletedMissionsCount,
   getCourseById,
-  getCourseIcon,
   getCourseThemeClass,
   getFirstUnlockedMissionId,
-  getNextMission,
-  getNextUnlockedCourseRoute,
   getProgressPercent,
 } from "./helpers";
-import type { AnswerState, MissionWithUi } from "./types";
+import { useMissionQuiz } from "./hooks/useMissionQuiz";
+import type { MissionWithUi } from "./types";
 import CourseHeader from "./components/CourseHeader";
 import MissionSidebar from "./components/MissionSidebar";
 import MissionContent from "./components/MissionContent";
@@ -54,25 +53,6 @@ const CoursePage = () => {
   }, [missions]);
 
   const [activeMissionId, setActiveMissionId] = useState("");
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const [answerState, setAnswerState] = useState<AnswerState>("idle");
-  const [showReward, setShowReward] = useState(false);
-  const [rewardXp, setRewardXp] = useState(0);
-
-  const resetAnswerState = () => {
-    setSelectedOptionId(null);
-    setAnswerState("idle");
-  };
-
-  const resetRewardState = () => {
-    setShowReward(false);
-    setRewardXp(0);
-  };
-
-  const resetMissionUiState = () => {
-    resetAnswerState();
-    resetRewardState();
-  };
 
   useEffect(() => {
     if (!firstUnlockedId) {
@@ -80,7 +60,6 @@ const CoursePage = () => {
     }
 
     setActiveMissionId(firstUnlockedId);
-    resetMissionUiState();
   }, [firstUnlockedId, courseId]);
 
   const activeContent = useMemo(() => {
@@ -98,6 +77,38 @@ const CoursePage = () => {
   const totalCount = missions.length;
   const progressPercent = getProgressPercent(completedCount, totalCount);
 
+  const {
+    selectedOptionId,
+    answerState,
+    showReward,
+    rewardXp,
+    setShowReward,
+    resetAnswerState,
+    resetMissionUiState,
+    handleSelect,
+    checkAnswer,
+    finishMission,
+    goNext,
+  } = useMissionQuiz({
+    missions,
+    activeMissionId,
+    setActiveMissionId,
+    activeMission,
+    activeContent,
+    dataCourses: data?.courses ?? [],
+    courseId,
+    completeMission,
+    navigate,
+  });
+
+  useEffect(() => {
+    if (!firstUnlockedId) {
+      return;
+    }
+
+    resetMissionUiState();
+  }, [firstUnlockedId, courseId, resetMissionUiState]);
+
   const openMission = (missionId: string) => {
     const mission = missions.find((item) => item.id === missionId);
 
@@ -107,76 +118,6 @@ const CoursePage = () => {
 
     setActiveMissionId(missionId);
     resetAnswerState();
-  };
-
-  const handleSelect = (optionId: string) => {
-    if (!activeMission || activeMission.locked) {
-      return;
-    }
-
-    if (
-      answerState === "checked_correct" ||
-      answerState === "checked_wrong"
-    ) {
-      return;
-    }
-
-    setSelectedOptionId(optionId);
-    setAnswerState("selected");
-  };
-
-  const checkAnswer = () => {
-    if (!selectedOptionId || !activeContent) {
-      return;
-    }
-
-    const isCorrect = selectedOptionId === activeContent.correctOptionId;
-    setAnswerState(isCorrect ? "checked_correct" : "checked_wrong");
-  };
-
-  const goNext = () => {
-    const nextMission = getNextMission(missions, activeMissionId);
-
-    if (nextMission && !nextMission.locked) {
-      setActiveMissionId(nextMission.id);
-      resetAnswerState();
-      return;
-    }
-
-    if (data) {
-      const nextCourseRoute = getNextUnlockedCourseRoute(data.courses, courseId);
-
-      if (nextCourseRoute) {
-        resetMissionUiState();
-        navigate(nextCourseRoute);
-        return;
-      }
-    }
-
-    navigate(APP_ROUTES.courses);
-  };
-
-  const finishMission = () => {
-    if (!activeMission) {
-      return;
-    }
-
-    if (activeMission.completed) {
-      return;
-    }
-
-    if (
-      answerState !== "checked_correct" &&
-      answerState !== "checked_wrong"
-    ) {
-      return;
-    }
-
-    const xp = answerState === "checked_correct" ? activeMission.xp : 0;
-
-    completeMission(courseId, activeMission.id, xp);
-    setRewardXp(xp);
-    setShowReward(true);
   };
 
   if (!data || !course) {
