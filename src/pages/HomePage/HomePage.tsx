@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { buildCourseRoute } from "../../constants/routes";
 import { useEduQuest } from "../../hooks/useEduQuest";
-import { UPCOMING_MAP_NODES } from "./constants";
 import { buildLastAchievements, buildMapNodes } from "./helpers";
 import {
   getCompletedMissionsCount,
@@ -48,7 +47,7 @@ const HomePage = () => {
 
     return buildMapNodes({
       courses: data.courses,
-      upcomingNodes: UPCOMING_MAP_NODES,
+      upcomingNodes: [],
       onOpenCourse: (courseId) => navigate(buildCourseRoute(courseId)),
     });
   }, [data, navigate]);

@@ -3,6 +3,7 @@
     "id": "forest-basics",
     "title": "Лес Основ",
     "description": "Стартовая локация. Изучение базовых понятий программирования.",
+    "icon": "🌲",
     "locked": false,
     "completed": false,
     "missions": [
@@ -48,6 +49,7 @@
     "id": "js-desert",
     "title": "Пустыня JavaScript",
     "description": "Изучение функций, циклов и массивов.",
+    "icon": "🏜️",
     "locked": true,
     "completed": false,
     "missions": [
@@ -88,5 +90,32 @@
         "isFinal": true
       }
     ]
+  },
+  {
+    "id": "react-castle",
+    "title": "Замок React",
+    "description": "Локация для изучения компонентов, props и state.",
+    "icon": "🏰",
+    "locked": true,
+    "completed": false,
+    "missions": []
+  },
+  {
+    "id": "typescript-mountains",
+    "title": "Горы TypeScript",
+    "description": "Локация для изучения типов, интерфейсов и безопасного кода.",
+    "icon": "⛰️",
+    "locked": true,
+    "completed": false,
+    "missions": []
+  },
+  {
+    "id": "api-ocean",
+    "title": "Океан API",
+    "description": "Локация для изучения запросов, ответов сервера и API.",
+    "icon": "🌊",
+    "locked": true,
+    "completed": false,
+    "missions": []
   }
 ]

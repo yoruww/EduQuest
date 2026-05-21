@@ -6,6 +6,7 @@ import { getCourseIcon } from "../../utils/courseMeta";
 import { COURSE_CONTENT } from "./courseContent";
 import { DEFAULT_COURSE_ID } from "./constants";
 import {
+  buildMissionContentList,
   buildMissionWithUiList,
   getActiveMission,
   getActiveMissionContent,
@@ -38,7 +39,15 @@ const CoursePage = () => {
     return getCourseById(data.courses, courseId);
   }, [data, courseId]);
 
-  const missionContentList = COURSE_CONTENT[courseId] ?? [];
+  const staticMissionContentList = COURSE_CONTENT[courseId] ?? [];
+
+  const missionContentList = useMemo(() => {
+    if (!course) {
+      return [];
+    }
+
+    return buildMissionContentList(course, staticMissionContentList);
+  }, [course, staticMissionContentList]);
 
   const missions = useMemo<MissionWithUi[]>(() => {
     if (!course) {
@@ -124,7 +133,18 @@ const CoursePage = () => {
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
-  const courseIcon = getCourseIcon(courseId);
+  if (course.locked) {
+    return (
+      <div className={styles.loading}>
+        <p>Этот курс пока закрыт.</p>
+        <button type="button" onClick={() => navigate(APP_ROUTES.courses)}>
+          Вернуться к курсам
+        </button>
+      </div>
+    );
+  }
+
+  const courseIcon = course.icon ?? getCourseIcon(courseId);
   const courseThemeClass = getCourseThemeClass(courseId, styles);
 
   return (

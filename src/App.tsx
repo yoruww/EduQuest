@@ -6,6 +6,7 @@ import CoursesPage from "./pages/CoursesPage/CoursesPage";
 import CoursePage from "./pages/CoursePage/CoursePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 import Layout from "./components/Layout/Layout";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path={APP_ROUTES.courses} element={<CoursesPage />} />
         <Route path={APP_ROUTES.course} element={<CoursePage />} />
         <Route path={APP_ROUTES.profile} element={<ProfilePage />} />
+        <Route path={APP_ROUTES.admin} element={<AdminPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

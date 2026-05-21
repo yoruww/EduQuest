@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEduQuest } from "../../hooks/useEduQuest";
 import { buildCourseCards } from "./helpers";
-import { SOON_COURSES } from "./constants";
 import type { CourseCardView } from "./types";
 import PageHeader from "./components/PageHeader";
 import CourseCard from "./components/CourseCard";
@@ -17,7 +16,7 @@ const CoursesPage = () => {
 
     return buildCourseCards({
       courses: data.courses,
-      soonCourses: SOON_COURSES,
+      soonCourses: [],
     });
   }, [data]);
 
@@ -37,11 +36,7 @@ const CoursesPage = () => {
 
       <section className={styles.grid}>
         {cards.map((card) => (
-          <CourseCard
-            key={card.id}
-            card={card}
-            onOpen={handleOpenCourse}
-          />
+          <CourseCard key={card.id} card={card} onOpen={handleOpenCourse} />
         ))}
       </section>
     </div>

@@ -11,6 +11,11 @@ export interface Achievement {
   condition: AchievementCondition;
 }
 
+export interface MissionOption {
+  id: string;
+  text: string;
+}
+
 export interface Mission {
   id: string;
   title: string;
@@ -18,6 +23,11 @@ export interface Mission {
   completed: boolean;
   locked: boolean;
   isFinal?: boolean;
+  icon?: string;
+  theory?: string;
+  question?: string;
+  options?: MissionOption[];
+  correctOptionId?: string;
 }
 
 export interface Course {
